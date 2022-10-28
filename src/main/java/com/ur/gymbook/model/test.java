@@ -10,13 +10,14 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 public class test {
-    private int userId;
+    private int userIdddd;
     private String userName;
     private String userPwd;
     private int age;
     private String userPhone;
     private int gender;
     private String userMail;
+//    private int t;
 
     @Override
     public String toString() {
