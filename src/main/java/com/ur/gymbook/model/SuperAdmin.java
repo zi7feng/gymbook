@@ -1,6 +1,5 @@
 package com.ur.gymbook.model;
 
-
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 import lombok.AllArgsConstructor;
@@ -10,18 +9,13 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class User {
-    private int userId;
-    private String userName;
-    private String userPwd;
-    private int age;
-    private String userPhone;
-    private int gender;
-    private String userEmail;
+public class SuperAdmin {
+    private int suId;
+    private String suName;
+    private String password;
 
     @Override
-    public String toString() {
-        JSON.DEFFAULT_DATE_FORMAT = "yyyy-MM-dd";
+    public String toString(){
         return JSON.toJSONString(this, SerializerFeature.DisableCircularReferenceDetect,
                 SerializerFeature.WriteDateUseDateFormat);
     }

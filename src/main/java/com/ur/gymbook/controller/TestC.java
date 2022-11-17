@@ -1,7 +1,5 @@
 package com.ur.gymbook.controller;
 
-import com.ur.gymbook.model.test;
-
 public class TestC {
 
 
