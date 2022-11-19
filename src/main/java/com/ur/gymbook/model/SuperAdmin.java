@@ -11,8 +11,8 @@ import lombok.NoArgsConstructor;
 @Data
 public class SuperAdmin {
     private int suId;
-    private String suName;
-    private String password;
+    private String suUserName;
+    private String suUserPwd;
 
     @Override
     public String toString(){

@@ -1,1 +1,29 @@
+spring:
+  datasource:
+    username: usts
+    password: qazwsxedc
+    url: jdbc:mysql://localhost:3306/usts?useJDBCCompliantTimezoneShift=true&serverTimezone=UTC
+    driver-class-name: com.mysql.jdbc.Driver
+  thymeleaf:
+    cache: false
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.ur.gymbook.model
+# Mybatis基于注解开发，开启驼峰命名转换（否则为NULL）
+  configuration:
+    map-underscore-to-camel-case: true
 
+
+
+
+
+
+#showSQL
+logging:
+  level:
+    com:
+      ur:
+        gymbook:
+          mapper: debug
+server:
+  port: 8081

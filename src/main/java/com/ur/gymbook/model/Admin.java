@@ -11,10 +11,10 @@ import lombok.NoArgsConstructor;
 @Data
 public class Admin {
     private int adId;
-    private String adName;
-    private String adPwd;
-    private String adPhone;
-    private String adEmail;
+    private String adminName;
+    private String adminPwd;
+    private String adminPhone;
+    private String adminEmail;
     private int activatedStatus;
 
     @Override
