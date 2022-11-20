@@ -2,7 +2,10 @@ package com.ur.gymbook.mapper;
 
 import com.ur.gymbook.model.Admin;
 import org.apache.ibatis.annotations.*;
+import org.springframework.stereotype.Repository;
 
+@Mapper
+@Repository
 public interface AdminMapper {
     /*
      * 注册

@@ -2,10 +2,12 @@ package com.ur.gymbook.mapper;
 
 import com.ur.gymbook.model.Control;
 import org.apache.ibatis.annotations.*;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Mapper
+@Repository
 public interface ControlMapper {
     /*
      设置Control关系

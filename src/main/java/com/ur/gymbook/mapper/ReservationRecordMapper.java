@@ -1,13 +1,13 @@
 package com.ur.gymbook.mapper;
 
 import com.ur.gymbook.model.ReservationRecord;
-import org.apache.ibatis.annotations.Delete;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Options;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Mapper
+@Repository
 public interface ReservationRecordMapper {
     /*
     查询所有预约记录

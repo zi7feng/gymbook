@@ -2,9 +2,12 @@ package com.ur.gymbook.mapper;
 
 import com.ur.gymbook.model.Venue;
 import org.apache.ibatis.annotations.*;
+import org.springframework.stereotype.Repository;
 
 import java.util.Date;
 
+@Mapper
+@Repository
 public interface VenueMapper {
     /*
      查看当前场馆是否可以预约

@@ -2,8 +2,10 @@ package com.ur.gymbook.mapper;
 
 import com.ur.gymbook.model.Maintain;
 import org.apache.ibatis.annotations.*;
+import org.springframework.stereotype.Repository;
 
 @Mapper
+@Repository
 public interface MaintainMapper {
     /*
     根据Ad_id查看Maintain关系
