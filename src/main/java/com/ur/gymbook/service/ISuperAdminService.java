@@ -12,5 +12,9 @@ public interface ISuperAdminService {
 
     List<Admin> listAdmin();
 
-    void activatedStatusSwitch(Admin admin);
+    int activatedStatusSwitch(Admin admin);
+
+    int updateAccount(SuperAdmin superAdmin);
+
+    int insertAccount(SuperAdmin superAdmin);
 }

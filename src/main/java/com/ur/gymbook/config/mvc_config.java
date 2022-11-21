@@ -18,7 +18,7 @@ public class mvc_config implements WebMvcConfigurer {
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
         registry.addViewController("/superAdmin.html").setViewName("superAdmin");
-        registry.addViewController("/company.html").setViewName("company");
+        registry.addViewController("/superAdminPage.html").setViewName("superAdminPage");
         registry.addViewController("/apply.html").setViewName("apply");
     }
 

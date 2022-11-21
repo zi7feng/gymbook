@@ -4,11 +4,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@Controller
+@RestController
 public class GymController {
     private Logger log = LoggerFactory.getLogger(this.getClass());
 
@@ -22,15 +23,7 @@ public class GymController {
         }
     }
 
-    @RequestMapping("/gym")
-    public String getGym(){
-        return "gym";
-    }
 
-    @RequestMapping("/superAdmin")
-    public String getSuperAdmin(){
-        return "superAdmin";
-    }
 
 
 

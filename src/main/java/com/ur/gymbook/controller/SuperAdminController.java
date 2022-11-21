@@ -1,8 +1,10 @@
 package com.ur.gymbook.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.ur.gymbook.model.Admin;
 import com.ur.gymbook.model.SuperAdmin;
 import com.ur.gymbook.service.ISuperAdminService;
+import org.apache.ibatis.annotations.Options;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
@@ -36,6 +38,11 @@ public class SuperAdminController {
         return superAdminService.listSu();
     }
 
+    @GetMapping("/listAdmin")
+    public List<Admin> listAdmin() {
+        return superAdminService.listAdmin();
+    }
+
     @PostMapping(value = "/login")
     public void adminLogin(@RequestParam(value = "username") String username,
                            @RequestParam(value = "password") String password,
@@ -59,11 +66,40 @@ public class SuperAdminController {
         try {
             request.getSession().invalidate();
             result.put("flag", true);
-            log.debug("Admin logout");
+            log.debug("Super Admin logout");
         } catch (Exception e) {
             log.error(e.toString());
             result.put("flag", false);
         }
         writeJSON2Response(result, response);
     }
+
+    @PostMapping(value = "/updatePassword")
+    public void superAdminUpdate(@RequestBody SuperAdmin superAdmin,
+                           HttpServletRequest request,HttpServletResponse response) {
+        log.debug("FRONT END TO SERVER: " + "Edit SU "+ superAdmin.getSuUserName() + " " + superAdmin.getSuUserPwd());
+        JSONObject resultJson = new JSONObject();
+        int ret = superAdminService.updateAccount(superAdmin);
+        if(ret > 0) {
+            resultJson.put("flag", true);
+        } else {
+            resultJson.put("flag", false);
+        }
+        writeJSON2Response(resultJson, response);
+    }
+
+    @PostMapping(value = "/insertAccount")
+    public void superAdminInsert(@RequestBody SuperAdmin superAdmin,
+                           HttpServletRequest request,HttpServletResponse response) {
+        log.debug("FRONT END TO SERVER: " + "INSERT SU "+ superAdmin.getSuUserName() + " " + superAdmin.getSuUserPwd());
+        JSONObject resultJson = new JSONObject();
+        int ret = superAdminService.insertAccount(superAdmin);
+        if(ret > 0) {
+            resultJson.put("flag", true);
+        } else {
+            resultJson.put("flag", false);
+        }
+        writeJSON2Response(resultJson, response);
+    }
+
 }

@@ -8,24 +8,28 @@ function getPath() {
 }
 
 $(document).ready(function () {
-    initTable();
+    initTable1();
+});
+
+$(document).ready(function () {
+    initTable2();
 });
 
 // 加载表格
-function initTable() {
-    $('#table').bootstrapTable('destroy');
-    $("#table").bootstrapTable({
+function initTable1() {
+    $('#table1').bootstrapTable('destroy');
+    $("#table1").bootstrapTable({
         method: "get",
-        url: getPath() + "/company/getAllInfo",
+        url: getPath() + "/superAdmin/listSu",
+        cache: false,
         pagination: true, //启动分页
-        pageNumber: 1,
-        pageSize: 5,
-        pageList: [10, 25, 50, 100], //记录数可选列表
+        pageList: "All", //记录数可选列表
         search: false,  //是否启用查询
         showColumns: true,  //显示下拉框勾选要显示的列
-        sidePagination: "server", //表示服务端请求
+        sidePagination: "client", //表示服务端请求
         queryParamsType: "limit",
         clickToSelect: true,
+        locale: 'en-US',
         queryParams: function queryParams(params) {   //设置查询参数
             var param = {
                 limit: params.limit,   //页面大小
@@ -37,19 +41,19 @@ function initTable() {
             return param;
         },
         onLoadSuccess: function () {  //加载成功时执行
-            $('#mResult').addClass('alert-success');
-            $('#mResult').html("加载成功!");
+            $('#mResult1').addClass('alert-success');
+            $('#mResult1').html("Success!");
             setTimeout(function () {
-                $('#mResult').removeClass('alert-success');
-                $('#mResult').html('');
+                $('#mResult1').removeClass('alert-success');
+                $('#mResult1').html('');
             }, 5000);
         },
         onLoadError: function () {  //加载失败时执行
-            $('#mResult').addClass('alert-danger');
-            $('#mResult').html("由于服务器的原因,加载失败!");
+            $('#mResult1').addClass('alert-danger');
+            $('#mResult1').html("Server Failed!");
             setTimeout(function () {
-                $('#mResult').removeClass('alert-danger');
-                $('#mResult').html('');
+                $('#mResult1').removeClass('alert-danger');
+                $('#mResult1').html('');
             }, 2000);
         },
     });
@@ -57,73 +61,100 @@ function initTable() {
 
 
 // 刷新表格
-$('#refreshBtn').click(function () {
-    initTable();
+$('#refreshBtn1').click(function () {
+    initTable1();
 });
 
+function initTable2() {
+    $('#table2').bootstrapTable('destroy');
+    $("#table2").bootstrapTable({
+        method: "get",
+        url: getPath() + "/superAdmin/listAdmin",
+        cache: false,
+        pagination: true, //启动分页
+        pageList: "All", //记录数可选列表
+        search: false,  //是否启用查询
+        showColumns: true,  //显示下拉框勾选要显示的列
+        sidePagination: "client", //表示服务端请求
+        queryParamsType: "limit",
+        clickToSelect: true,
+        locale: 'en-US',
+        queryParams: function queryParams(params) {   //设置查询参数
+            var param = {
+                limit: params.limit,   //页面大小
+                offset: params.offset,  //页码
+                search: params.search,
+                sort: params.sort,
+                order: params.order,
+            };
+            return param;
+        },
+        onLoadSuccess: function () {  //加载成功时执行
+            $('#mResult2').addClass('alert-success');
+            $('#mResult2').html("Success!");
+            setTimeout(function () {
+                $('#mResult2').removeClass('alert-success');
+                $('#mResult2').html('');
+            }, 5000);
+        },
+        onLoadError: function () {  //加载失败时执行
+            $('#mResult2').addClass('alert-danger');
+            $('#mResult2').html("Server Failed!");
+            setTimeout(function () {
+                $('#mResult2').removeClass('alert-danger');
+                $('#mResult2').html('');
+            }, 2000);
+        },
+    });
+}
 
-$('#insertSave').click(function () {
-    var insertCompanyId = $('#insertCompanyId').val();
-    var insertCompanyName = $('#insertCompanyName').val();
-    var insertPrincipalAccount = $('#insertPrincipalAccount').val();
-    var insertCompanyAddress = $('#insertCompanyAddress').val();
-    var insertCompanyTel = $('#insertCompanyTel').val();
-    var insertIntroduction = $('#insertIntroduction').val();
-    var insertLegalPerson = $('#insertLegalPerson').val();
-    var insertLegalPersonTel = $('#insertLegalPersonTel').val();
+$('#refreshBtn2').click(function () {
+    initTable2();
+});
+
+$('#insertSave1').click(function () {
+    var insertSuUserName = $('#insertSuUserName').val();
+    var insertSuUserPwd = $('#insertSuUserPwd').val();
 
     $.ajax({
         type: "post",
-        url: getPath() + "/company/insertData",
+        url: getPath() + "/superAdmin/insertAccount",
         async: false,
         dataType: 'json',
         contentType: 'application/json',
         data: JSON.stringify({
             // "id": insertId,
-            "companyId": insertCompanyId,
-            "companyName": insertCompanyName,
-            "principalAccount": insertPrincipalAccount,
-            "companyAddress": insertCompanyAddress,
-            "companyTel": insertCompanyTel,
-            "introduction": insertIntroduction,
-            "legalPerson": insertLegalPerson,
-            "legalPersonTel":insertLegalPersonTel
+            "suId": 0,
+            "suUserName": insertSuUserName,
+            "suUserPwd": insertSuUserPwd
         }),
         success: function (data) {
             if (data.flag) {
                 $('#insertModal').modal("hide");
-                $('#insertCompanyId').val('');
-                $('#insertCompanyName').val('');
-                $('#insertPrincipalAccount').val('');
-                $('#insertCompanyAddress').val('');
-                $('#insertCompanyTel').val('');
-                $('#insertIntroduction').val('');
-                $('#insertLegalPerson').val('');
-                $('#insertLegalPersonTel').val('');
+                $('#insertSuUserName').val('');
+                $('#insertSuUserPwd').val('');
                 bootbox.alert({
                     centerVertical: true,
-                    title: "成功",
-                    message: "添加成功!",
-                    locale: "zh_CN"
+                    title: "Success",
+                    message: "Success!",
+                    locale: "en_US"
                 })
-                initTable();
             } else {
                 bootbox.alert({
                     centerVertical: true,
-                    title: "失败",
-                    message: "添加失败!",
-                    locale: "zh_CN"
+                    title: "Failed",
+                    message: "Failed!",
+                    locale: "en_US"
                 })
-                initTable();
             }
-
+            initTable1();
         },
         error: function () {
-            $('#mResult').addClass('alert-danger');
-            $('#mResult').html("由于服务器原因，添加失败!");
+            $('#mResult1').addClass('alert-danger');
+            $('#mResult1').html("Server Failed!");
             setTimeout(function () {
-                $('#mResult').removeClass('alert-danger');
-                $('#mResult').html('');
+                $('#mResult1').removeClass('alert-danger');
+                $('#mResult1').html('');
             }, 2000);
         }
     })
@@ -134,103 +165,72 @@ $('#insertSave').click(function () {
 
 
 // 更新信息
-$('#updateBtn').click(function () {
-    var rows = $('#table').bootstrapTable('getSelections');
+$('#updateBtn1').click(function () {
+    var rows = $('#table1').bootstrapTable('getSelections');
     if (rows.length != 1) {
         bootbox.alert({
             centerVertical: true,
-            title: "错误",
-            message: "操作只能选择一条信息！",
-            locale: "zh_CN"
+            title: "Error",
+            message: "Allow selecting only 1 row! ",
+            locale: "en_US"
         });
     } else {
-        $('#updateCompanyId').val(rows[0].companyId);
-        $('#updateCompanyName').val(rows[0].companyName);
-        $('#updatePrincipalAccount').val(rows[0].principalAccount);
-        $('#updateCompanyAddress').val(rows[0].companyAddress);
-        $('#updateCompanyTel').val(rows[0].companyTel);
-        $('#updateIntroduction').val(rows[0].introduction);
-        $('#updateLegalPerson').val(rows[0].legalPerson);
-        $('#updateLegalPersonTel').val(rows[0].legalPersonTel);
-        $('#updateModal').modal("toggle");
+        //$('#updateSuId').val(rows[0]["suId"]);
+        //$('#updateSuUserName').val(rows[0]["suUserName"]);
+        $('#updateSuUserPwd').val(rows[0]["suUserPwd"]);
+        $('#updateModal1').modal("toggle");
     }
 });
 
 
-$('#updateSave').click(function () {
-    var rows = $('#table').bootstrapTable('getSelections');
-    var updateId = rows[0].id;
-    var updateCompanyId = $('#updateCompanyId').val();
-    var updateCompanyName = $('#updateCompanyName').val();
-    var updatePrincipalAccount = $('#updatePrincipalAccount').val();
-    var updateCompanyAddress = $('#updateCompanyAddress').val();
-    var updateCompanyTel = $('#updateCompanyTel').val();
-    var updateIntroduction = $('#updateIntroduction').val();
-    var updateLegalPerson = $('#updateLegalPerson').val();
-    var updateLegalPersonTel = $('#updateLegalPersonTel').val();
+$('#updateSave1').click(function () {
+    var rows = $('#table1').bootstrapTable('getSelections');
+    var updateId = rows[0]["suId"];
+    var updateSuUserName = rows[0]["suUserName"]
+    var updateSuUserPwd = $('#updateSuUserPwd').val();
 
 
     $.ajax({
         type: "post",
-        url: getPath() + "/company/updateData",
+        url: getPath() + "/superAdmin/updatePassword",
         async: false,
         dataType: 'json',
         contentType: 'application/json',
         data: JSON.stringify({
-            "id": updateId,
-            "companyId": updateCompanyId,
-            "companyName": updateCompanyName,
-            "principalAccount": updatePrincipalAccount,
-            "companyAddress": updateCompanyAddress,
-            "companyTel": updateCompanyTel,
-            "introduction": updateIntroduction,
-            "legalPerson": updateLegalPerson,
-            "legalPersonTel": updateLegalPersonTel
+            "suId": updateId,
+            "suUserName": updateSuUserName,
+            "suUserPwd": updateSuUserPwd
         }),
         success: function (data) {
             if (data.flag) {
                 $('#insertModal').modal("hide");
-                $('#updateCompanyId').val('');
-                $('#updateCompanyName').val('');
-                $('#updatePrincipalAccount').val('');
-                $('#updateCompanyAddress').val('');
-                $('#updateCompanyTel').val('');
-                $('#updateIntroduction').val('');
-                $('#updateLegalPerson').val('');
-                $('#updateLegalPersonTel').val('');
+                $('#updateSuId').val('');
+                $('#updateSuUserName').val('');
+                $('#updateSuUserPwd').val('');
                 bootbox.alert({
                     centerVertical: true,
-                    title: "成功",
-                    message: "修改成功!",
-                    locale: "zh_CN"
+                    title: "Success",
+                    message: "Success!",
+                    locale: "en-US"
                 })
-                initTable();
             } else {
                 bootbox.alert({
                     centerVertical: true,
-                    title: "失败",
-                    message: "修改失败!",
-                    locale: "zh_CN"
+                    title: "Failed",
+                    message: "Failed!",
+                    locale: "en-US"
                 });
-                initTable();
             }
-
+            initTable1();
         },
         error: function () {
             $('#updateModal').modal("hide");
-            $('#updateCompanyId').val('');
-            $('#updateCompanyName').val('');
-            $('#updatePrincipalAccount').val('');
-            $('#updateCompanyAddress').val('');
-            $('#updateCompanyTel').val('');
-            $('#updateIntroduction').val('');
-            $('#updateLegalPerson').val('');
-            $('#updateLegalPersonTel').val('');
-            $('#mResult').addClass('alert-danger');
-            $('#mResult').html("由于服务器原因，添加失败!");
+            $('#updateSuUserPwd').val('');
+            $('#mResult1').addClass('alert-danger');
+            $('#mResult1').html("Server Failed!");
             setTimeout(function () {
-                $('#mResult').removeClass('alert-danger');
-                $('#mResult').html('');
+                $('#mResult1').removeClass('alert-danger');
+                $('#mResult1').html('');
             }, 200);
         }
     })
@@ -261,7 +261,7 @@ $('#findByCompanyIdBtn').click(function () {
                     centerVertical: true,
                     title: "失败",
                     message: "搜索失败!",
-                    locale: "zh_CN"
+                    locale: "en-US"
                 })
                 initTable();
             }
@@ -300,7 +300,7 @@ $('#fuzzSearchBtn').click(function () {
                     centerVertical: true,
                     title: "失败",
                     message: "搜索失败!",
-                    locale: "zh_CN"
+                    locale: "en-US"
                 })
                 initTable();
             }

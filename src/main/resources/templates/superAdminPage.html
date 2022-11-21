@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!--  <meta http-equiv="X-UA-Compatible" content="IE=edge">-->
+
+  <title>Gym Booking</title>
+  <!-- <link rel="icon" href="img/lab_logo.svg"> -->
+  <link rel="stylesheet" href="../static/css/bootstrap.css" th:href="@{/css/bootstrap.css}">
+  <link rel="stylesheet" href="../static/css/admin_page.css" th:href="@{/css/admin_page.css}">
+  <link rel="stylesheet" href="../static/css/bootstrap-table.css" th:href="@{/css/bootstrap-table.css}">
+  <link rel="stylesheet" href="../static/css/bootstrap-datepicker.min.css" th:href="@{/css/bootstrap-datepicker.min.css}">
+  <script src="../static/js/solid.js" th:src="@{/js/solid.js}"></script>
+  <script src="../static/js/fontawesome.js"th:src="@{/js/fontawesome.js}"></script>
+</head>
+
+<body>
+<div class="wrapper">
+  <!-- Sidebar  -->
+  <nav id="sidebar">
+    <div class="sidebar-header">
+      <h3>Gym Management</h3>
+    </div>
+
+    <div class="brand">
+      <p>
+        <img src="../static/img/guides.svg" th:src="@{/img/guides.svg}" height="250%" width="250%"/>
+      </p>
+    </div>
+
+<!--    <ul class="list-unstyled components">-->
+<!--      <li>-->
+<!--        <a href="company.html">已认证企业管理管理</a>-->
+<!--      </li>-->
+<!--      <li>-->
+<!--        <a href="apply.html">待认证企业审批</a>-->
+<!--      </li>-->
+<!--    </ul>-->
+    <ul class="list-unstyled CTAs">
+      <li>
+        <button class="btn btn-info btn-block" id="logout">
+          <i class="fas fa-sign-out-alt"></i>
+          Logout
+        </button>
+      </li>
+    </ul>
+
+  </nav>
+
+  <!-- Page Content  -->
+  <div id="content">
+    <h4>Super Admin</h4>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container-fluid">
+        <button type="button" id="sidebarCollapse" class="btn btn-info">
+          <i class="fas fa-align-left"></i>
+          <span>Menu</span>
+        </button>
+
+      </div>
+    </nav>
+
+    <!--数据表-->
+    <div id="toolbar1">
+      <button type="button" class="btn btn-success" id="refreshBtn1">
+        <i class="fas fa-sync" aria-hidden="true"></i>
+        Refresh
+      </button>
+      <button type="button" class="btn btn-info" id="insertBtn1" data-toggle="modal" data-target="#insertModal1">
+      <i class="fa fa-plus-circle" aria-hidden="true"></i>
+        Add
+      </button>
+      <button type="button" class="btn btn-primary" id="updateBtn1">
+        <i class="fas fa-edit"></i>
+        Edit
+      </button>
+      <!--            <button type="button" class="btn btn-warning" id="repairBtn">-->
+      <!--                <i class="fa fa-wrench" aria-hidden="true"></i>-->
+      <!--                维修-->
+      <!--            </button>-->
+      <!--            <button type="button" class="btn btn-danger" id="scrapBtn">-->
+      <!--                <i class="fa fa-trash" aria-hidden="true"></i>-->
+      <!--                报废-->
+      <!--            </button>-->
+<!--      <button class="btn btn-secondary dropdown-toggle" type="button" id="searchButtons1" data-toggle="dropdown">-->
+<!--        <i class="fa fa-search" aria-hidden="true"></i>-->
+<!--        Search-->
+<!--      </button>-->
+
+<!--      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">-->
+<!--        <button type="button" class="dropdown-item" id="dateSearchBtn1" data-toggle="modal"-->
+<!--                data-target="#findByKeywordModal">-->
+<!--          <i class="fa fa-search-plus" aria-hidden="true"></i>-->
+<!--          Fuzz Search-->
+<!--        </button>-->
+<!--      </div>-->
+
+    </div>
+
+    <h4>Admin</h4>
+    <table id="table1"
+           data-toggle="true"
+           data-pagination="true"
+           data-locale="zh_CN"
+           data-show-toggle="true"
+           data-show-columns="true"
+           data-sort-name="id"
+           data-sort-order="asc"
+           data-toolbar="#toolbar1"
+           data-id-field="id"
+           data-check-on-init="false"
+           data-click-to-select="true">
+      <thead>
+      <tr>
+        <th data-field="state" data-checkbox="true">choose all</th>
+        <th data-field="suId" data-sortable="true">Super Admin ID</th>
+        <th data-field="suUserName" data-sortable="true">Super Username</th>
+        <th data-field="suUserPwd" data-sortable="true">Password</th>
+      </tr>
+      </thead>
+    </table>
+
+    <div class="alert  fade show" role="alert" id="mResult1"></div>
+
+
+    <!--数据表-->
+    <div id="toolbar2">
+      <button type="button" class="btn btn-success" id="refreshBtn2">
+        <i class="fas fa-sync" aria-hidden="true"></i>
+        Refresh
+      </button>
+      <!--            <button type="button" class="btn btn-info" id="insertBtn" data-toggle="modal" data-target="#insertModal">-->
+      <!--                <i class="fa fa-plus-circle" aria-hidden="true"></i>-->
+      <!--                添加-->
+      <!--            </button>-->
+      <button type="button" class="btn btn-primary" id="updateBtn2">
+        <i class="fas fa-edit"></i>
+        Edit
+      </button>
+      <!--            <button type="button" class="btn btn-warning" id="repairBtn">-->
+      <!--                <i class="fa fa-wrench" aria-hidden="true"></i>-->
+      <!--                维修-->
+      <!--            </button>-->
+      <!--            <button type="button" class="btn btn-danger" id="scrapBtn">-->
+      <!--                <i class="fa fa-trash" aria-hidden="true"></i>-->
+      <!--                报废-->
+      <!--            </button>-->
+<!--      <button class="btn btn-secondary dropdown-toggle" type="button" id="searchButtons2" data-toggle="dropdown">-->
+<!--        <i class="fa fa-search" aria-hidden="true"></i>-->
+<!--        Search-->
+<!--      </button>-->
+
+<!--      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">-->
+<!--        <button type="button" class="dropdown-item" id="dateSearchBtn2" data-toggle="modal"-->
+<!--                data-target="#findByKeywordModal">-->
+<!--          <i class="fa fa-search-plus" aria-hidden="true"></i>-->
+<!--          Fuzz Search-->
+<!--        </button>-->
+<!--      </div>-->
+    </div>
+    <table id="table2"
+           data-toggle="true"
+           data-pagination="true"
+           data-locale="zh_CN"
+           data-show-toggle="true"
+           data-show-columns="true"
+           data-sort-name="id"
+           data-sort-order="asc"
+           data-toolbar="#toolbar2"
+           data-id-field="id"
+           data-check-on-init="false"
+           data-click-to-select="true">
+      <thead>
+      <tr>
+        <th data-field="state2" data-checkbox="true"></th>
+        <th data-field="adId" data-sortable="true">ID</th>
+        <th data-field="adminName" data-sortable="true">Name</th>
+        <th data-field="adminPwd" data-sortable="true">Pwd</th>
+        <th data-field="adminPhone" data-sortable="true">Phone</th>
+        <th data-field="adminEmail" data-sortable="true">Email</th>
+        <th data-field="activatedStatus" data-sortable="true">Status</th>
+      </tr>
+      </thead>
+    </table>
+
+    <div class="alert  fade show" role="alert" id="mResult2"></div>
+
+
+    <!--添加数据 -->
+    <div class="modal fade" id="insertModal1" tabindex="-1" role="dialog">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Add Super Account</h5>
+          </div>
+          <div class="modal-body">
+            <form class="form-group" id="insertForm1">
+              <div class="form-group">
+                <label for="insertSuUserName">Super Admin Username</label>
+                <input type="text" class="form-control" id="insertSuUserName" placeholder="">
+              </div>
+              <div class="form-group">
+                <label for="insertSuUserPwd">Password</label>
+                <input type="text" class="form-control" id="insertSuUserPwd" placeholder="">
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" id="insertSave1">Add</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!--更新数据-->
+    <div class="modal fade" id="updateModal1" tabindex="-1" role="dialog">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Edit Super Account</h5>
+          </div>
+          <div class="modal-body">
+            <form class="form-group" id="updateForm1">
+<!--              <div class="form-group">-->
+<!--                <label for="updateSuId">Super Admin ID</label>-->
+<!--                <input type="text" class="form-control" id="updateSuId" placeholder="">-->
+<!--              </div>-->
+<!--              <div class="form-group">-->
+<!--                <label for="updateSuUserName">Super Username</label>-->
+<!--                <input type="text" class="form-control" id="updateSuUserName" placeholder="">-->
+<!--              </div>-->
+              <div class="form-group">
+                <label for="updateSuUserPwd">Password</label>
+                <input type="text" class="form-control" id="updateSuUserPwd" placeholder="">
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" id="updateSave1">Confirm</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="findByCompanyId" tabindex="-1" role="dialog">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">按编号查找数据</h5>
+          </div>
+          <div class="modal-body">
+            <form class="form-group" id="findByDateForm">
+              <div class="form-group">
+                <label for="companyId">编号</label>
+                <input type="text" class="form-control" id="companyId" placeholder="">
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+            <button type="button" class="btn btn-primary" id="findBySerialNumberBtn">搜索</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="modal fade" id="findByKeywordModal" tabindex="-1" role="dialog">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">关键字搜索</h5>
+          </div>
+          <div class="modal-body">
+            <form class="form-group" id="searchForm">
+              <div class="form-group">
+                <label for="searchKeyWord">搜索关键字</label>
+                <input type="text" class="form-control" id="searchKeyWord" placeholder="">
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+            <button type="button" class="btn btn-primary" id="fuzzSearchBtn">搜索</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+</div>
+
+<script src="../static/js/jquery-3.4.0.min.js" th:src="@{/js/jquery-3.4.0.min.js}"></script>
+<script src="../static/js/bootstrap.bundle.js" th:src="@{/js/bootstrap.bundle.js}"></script>
+<script src="../static/js/bootstrap-table.js" th:src="@{/js/bootstrap-table.js}"></script>
+<script src="../static/js/bootstrap-table-locale-all.js" th:src="@{/js/bootstrap-table-locale-all.js}"></script>
+<script src="../static/js/bootbox.min.js" th:src="@{/js/bootbox.min.js}"></script>
+<script src="../static/js/bootbox.locales.min.js" th:src="@{/js/bootbox.locales.min.js}"></script>
+<script src="../static/js/bootstrap-datepicker.min.js" th:src="@{/js/bootstrap-datepicker.min.js}"></script>
+<script src="../static/js/superAdminPage.js" th:src="@{/js/superAdminPage.js}"></script>
+
+<script>
+  $(document).ready(function () {
+    $.ajaxSetup({
+      complete: function (xhr, status) {
+        //拦截器实现超时跳转到登录页面
+        // 通过xhr取得响应头
+        var REDIRECT = xhr.getResponseHeader("REDIRECT");
+        // alert(REDIRECT);
+        //如果响应头中包含 REDIRECT 则说明是拦截器返回的
+        if (REDIRECT == "REDIRECT") {
+          var win = window;
+          while (win != win.top) {
+            win = win.top;
+          }
+          //重新跳转到拦截器中的路径
+          win.location.href = xhr.getResponseHeader("CONTEXTPATH");
+        }
+      }
+    });
+
+
+    $('#sidebarCollapse').on('click', function () {
+      $('#sidebar').toggleClass('active');
+    });
+
+    $('#insertPDate').datepicker({
+      format: 'yyyy-mm-dd'
+    });
+
+    $('#updatePDate').datepicker({
+      format: 'yyyy-mm-dd'
+    });
+
+    $('#logout').click(function () {
+      $.ajax({
+        type: "post",
+        url: getPath() + "/superAdmin/logout",
+        async: false,
+        dataType: "json",
+        success: function (data) {
+          if (data.flag)
+            location.href = "/";
+        },
+        error: function () {
+
+        }
+      })
+    });
+
+    Date.prototype.pattern = function (fmt) {
+      var o = {
+        "M+": this.getMonth() + 1, //月份
+        "d+": this.getDate(), //日
+        "h+": this.getHours() % 12 == 0 ? 12 : this.getHours() % 12, //小时
+        "H+": this.getHours(), //小时
+        "m+": this.getMinutes(), //分
+        "s+": this.getSeconds(), //秒
+        "q+": Math.floor((this.getMonth() + 3) / 3), //季度
+        "S": this.getMilliseconds() //毫秒
+      };
+      var week = {
+        "0": "/u65e5",
+        "1": "/u4e00",
+        "2": "/u4e8c",
+        "3": "/u4e09",
+        "4": "/u56db",
+        "5": "/u4e94",
+        "6": "/u516d"
+      };
+      if (/(y+)/.test(fmt)) {
+        fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+      }
+      if (/(E+)/.test(fmt)) {
+        fmt = fmt.replace(RegExp.$1, ((RegExp.$1.length > 1) ? (RegExp.$1.length > 2 ? "/u661f/u671f" : "/u5468") : "") + week[this.getDay() + ""]);
+      }
+      for (var k in o) {
+        if (new RegExp("(" + k + ")").test(fmt)) {
+          fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+        }
+      }
+      return fmt;
+    };
+  });
+</script>
+</body>
+
+</html>

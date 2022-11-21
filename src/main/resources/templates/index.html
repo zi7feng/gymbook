@@ -6,8 +6,8 @@
 
     <title>Welcome</title>
 
-    <link href="css2/bootstrap.min.css" rel="stylesheet">
-    <link href="css2/style.css" rel="stylesheet">
+    <link href="../static/css2/bootstrap.min.css" rel="stylesheet" th:href="@{/css2/bootstrap.min.css}">
+    <link href="../static/css2/style.css" rel="stylesheet" th:href="@{/css2/style.css}">
 
 </head>
 <body>
@@ -35,11 +35,11 @@
     </div>
 </div>
 
-<script src="js2/jquery.min.js"></script>
-<script src="js2/bootstrap.min.js"></script>
+<script src="../static/js2/jquery.min.js" th:src="@{/js2/jquery.min.js}"></script>
+<script src="../static/js2/bootstrap.min.js" th:src="@{/js2/bootstrap.min.js}"></script>
 <script>
     $('#button3').click(function (){
-        window.location.href = "/superAdmin";
+        window.location.href = "./superAdmin.html";
     })
 </script>
 

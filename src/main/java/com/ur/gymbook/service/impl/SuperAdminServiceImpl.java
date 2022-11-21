@@ -31,7 +31,18 @@ public class SuperAdminServiceImpl implements ISuperAdminService{
     }
 
     @Override
-    public void activatedStatusSwitch(Admin admin) {
-        superAdminMapper.activatedStatusSwitch(admin);
+    public int activatedStatusSwitch(Admin admin) {
+        return superAdminMapper.activatedStatusSwitch(admin);
+    }
+
+    @Override
+    public int updateAccount(SuperAdmin superAdmin) {
+        return superAdminMapper.updateAccount(superAdmin);
+
+    }
+
+    @Override
+    public int insertAccount(SuperAdmin superAdmin) {
+        return superAdminMapper.insertAccount(superAdmin);
     }
 }
