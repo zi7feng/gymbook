@@ -1,6 +1,5 @@
 package com.ur.gymbook.service.impl;
 
-import com.ur.gymbook.mapper.AdminMapper;
 import com.ur.gymbook.mapper.SuperAdminMapper;
 import com.ur.gymbook.model.Admin;
 import com.ur.gymbook.model.SuperAdmin;
@@ -44,5 +43,10 @@ public class SuperAdminServiceImpl implements ISuperAdminService{
     @Override
     public int insertAccount(SuperAdmin superAdmin) {
         return superAdminMapper.insertAccount(superAdmin);
+    }
+
+    @Override
+    public int deleteAccount(SuperAdmin superAdmin) {
+        return superAdminMapper.deleteAccount(superAdmin);
     }
 }

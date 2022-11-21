@@ -29,7 +29,7 @@
         <img src="../static/img/guides.svg" th:src="@{/img/guides.svg}" height="250%" width="250%"/>
       </p>
     </div>
-
+<!--    加入链接-->
 <!--    <ul class="list-unstyled components">-->
 <!--      <li>-->
 <!--        <a href="company.html">已认证企业管理管理</a>-->
@@ -51,7 +51,6 @@
 
   <!-- Page Content  -->
   <div id="content">
-    <h4>Super Admin</h4>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <div class="container-fluid">
         <button type="button" id="sidebarCollapse" class="btn btn-info">
@@ -62,7 +61,7 @@
       </div>
     </nav>
 
-    <!--数据表-->
+    <!--数据表1-->
     <div id="toolbar1">
       <button type="button" class="btn btn-success" id="refreshBtn1">
         <i class="fas fa-sync" aria-hidden="true"></i>
@@ -76,30 +75,12 @@
         <i class="fas fa-edit"></i>
         Edit
       </button>
-      <!--            <button type="button" class="btn btn-warning" id="repairBtn">-->
-      <!--                <i class="fa fa-wrench" aria-hidden="true"></i>-->
-      <!--                维修-->
-      <!--            </button>-->
-      <!--            <button type="button" class="btn btn-danger" id="scrapBtn">-->
-      <!--                <i class="fa fa-trash" aria-hidden="true"></i>-->
-      <!--                报废-->
-      <!--            </button>-->
-<!--      <button class="btn btn-secondary dropdown-toggle" type="button" id="searchButtons1" data-toggle="dropdown">-->
-<!--        <i class="fa fa-search" aria-hidden="true"></i>-->
-<!--        Search-->
-<!--      </button>-->
-
-<!--      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">-->
-<!--        <button type="button" class="dropdown-item" id="dateSearchBtn1" data-toggle="modal"-->
-<!--                data-target="#findByKeywordModal">-->
-<!--          <i class="fa fa-search-plus" aria-hidden="true"></i>-->
-<!--          Fuzz Search-->
-<!--        </button>-->
-<!--      </div>-->
-
+      <button type="button" class="btn btn-danger" id="deleteBtn1">
+        <i class="fa fa-trash" aria-hidden="true"></i>
+        Delete
+      </button>
     </div>
-
-    <h4>Admin</h4>
+    <h4>Super Admin</h4>
     <table id="table1"
            data-toggle="true"
            data-pagination="true"
@@ -125,7 +106,7 @@
     <div class="alert  fade show" role="alert" id="mResult1"></div>
 
 
-    <!--数据表-->
+    <!--数据表2-->
     <div id="toolbar2">
       <button type="button" class="btn btn-success" id="refreshBtn2">
         <i class="fas fa-sync" aria-hidden="true"></i>
@@ -143,10 +124,6 @@
       <!--                <i class="fa fa-wrench" aria-hidden="true"></i>-->
       <!--                维修-->
       <!--            </button>-->
-      <!--            <button type="button" class="btn btn-danger" id="scrapBtn">-->
-      <!--                <i class="fa fa-trash" aria-hidden="true"></i>-->
-      <!--                报废-->
-      <!--            </button>-->
 <!--      <button class="btn btn-secondary dropdown-toggle" type="button" id="searchButtons2" data-toggle="dropdown">-->
 <!--        <i class="fa fa-search" aria-hidden="true"></i>-->
 <!--        Search-->
@@ -160,6 +137,7 @@
 <!--        </button>-->
 <!--      </div>-->
     </div>
+    <h4>Admin</h4>
     <table id="table2"
            data-toggle="true"
            data-pagination="true"
@@ -175,9 +153,9 @@
       <thead>
       <tr>
         <th data-field="state2" data-checkbox="true"></th>
-        <th data-field="adId" data-sortable="true">ID</th>
-        <th data-field="adminName" data-sortable="true">Name</th>
-        <th data-field="adminPwd" data-sortable="true">Pwd</th>
+        <th data-field="adId" data-sortable="true">Admin ID</th>
+        <th data-field="adminName" data-sortable="true">Username</th>
+        <th data-field="adminPwd" data-sortable="true">Password</th>
         <th data-field="adminPhone" data-sortable="true">Phone</th>
         <th data-field="adminEmail" data-sortable="true">Email</th>
         <th data-field="activatedStatus" data-sortable="true">Status</th>
@@ -188,7 +166,7 @@
     <div class="alert  fade show" role="alert" id="mResult2"></div>
 
 
-    <!--添加数据 -->
+    <!--添加数据1 -->
     <div class="modal fade" id="insertModal1" tabindex="-1" role="dialog">
       <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
@@ -216,7 +194,7 @@
     </div>
 
 
-    <!--更新数据-->
+    <!--更新数据1-->
     <div class="modal fade" id="updateModal1" tabindex="-1" role="dialog">
       <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
@@ -247,52 +225,46 @@
       </div>
     </div>
 
-    <div class="modal fade" id="findByCompanyId" tabindex="-1" role="dialog">
+    <!--更新数据2-->
+    <div class="modal fade" id="updateModal2" tabindex="-1" role="dialog">
       <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title">按编号查找数据</h5>
+            <h5 class="modal-title">Change Admin Status</h5>
           </div>
           <div class="modal-body">
-            <form class="form-group" id="findByDateForm">
+            <form class="form-group" id="updateForm2">
               <div class="form-group">
-                <label for="companyId">编号</label>
-                <input type="text" class="form-control" id="companyId" placeholder="">
+                <label for="updateActivatedStatus">Status</label>
+                <input type="number" class="form-control" id="updateActivatedStatus" min="0" max="1">
               </div>
             </form>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
-            <button type="button" class="btn btn-primary" id="findBySerialNumberBtn">搜索</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" id="updateSave2">Confirm</button>
           </div>
         </div>
       </div>
     </div>
 
-
-    <div class="modal fade" id="findByKeywordModal" tabindex="-1" role="dialog">
+    <!--删除数据1-->
+    <div class="modal fade" id="deleteModal1" tabindex="-1" role="dialog">
       <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title">关键字搜索</h5>
+            <h5 class="modal-title">Delete Super Admin</h5>
           </div>
           <div class="modal-body">
-            <form class="form-group" id="searchForm">
-              <div class="form-group">
-                <label for="searchKeyWord">搜索关键字</label>
-                <input type="text" class="form-control" id="searchKeyWord" placeholder="">
-              </div>
-            </form>
+            <h6>Do you want to delete it?</h6>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
-            <button type="button" class="btn btn-primary" id="fuzzSearchBtn">搜索</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" id="deleteSave1">Confirm</button>
           </div>
         </div>
       </div>
     </div>
-
-
   </div>
 </div>
 
@@ -328,15 +300,7 @@
 
     $('#sidebarCollapse').on('click', function () {
       $('#sidebar').toggleClass('active');
-    });
-
-    $('#insertPDate').datepicker({
-      format: 'yyyy-mm-dd'
-    });
-
-    $('#updatePDate').datepicker({
-      format: 'yyyy-mm-dd'
-    });
+    })
 
     $('#logout').click(function () {
       $.ajax({
@@ -353,40 +317,6 @@
         }
       })
     });
-
-    Date.prototype.pattern = function (fmt) {
-      var o = {
-        "M+": this.getMonth() + 1, //月份
-        "d+": this.getDate(), //日
-        "h+": this.getHours() % 12 == 0 ? 12 : this.getHours() % 12, //小时
-        "H+": this.getHours(), //小时
-        "m+": this.getMinutes(), //分
-        "s+": this.getSeconds(), //秒
-        "q+": Math.floor((this.getMonth() + 3) / 3), //季度
-        "S": this.getMilliseconds() //毫秒
-      };
-      var week = {
-        "0": "/u65e5",
-        "1": "/u4e00",
-        "2": "/u4e8c",
-        "3": "/u4e09",
-        "4": "/u56db",
-        "5": "/u4e94",
-        "6": "/u516d"
-      };
-      if (/(y+)/.test(fmt)) {
-        fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
-      }
-      if (/(E+)/.test(fmt)) {
-        fmt = fmt.replace(RegExp.$1, ((RegExp.$1.length > 1) ? (RegExp.$1.length > 2 ? "/u661f/u671f" : "/u5468") : "") + week[this.getDay() + ""]);
-      }
-      for (var k in o) {
-        if (new RegExp("(" + k + ")").test(fmt)) {
-          fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
-        }
-      }
-      return fmt;
-    };
   });
 </script>
 </body>

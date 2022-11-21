@@ -4,7 +4,6 @@ import com.alibaba.fastjson.JSONObject;
 import com.ur.gymbook.model.Admin;
 import com.ur.gymbook.model.SuperAdmin;
 import com.ur.gymbook.service.ISuperAdminService;
-import org.apache.ibatis.annotations.Options;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
@@ -94,6 +93,34 @@ public class SuperAdminController {
         log.debug("FRONT END TO SERVER: " + "INSERT SU "+ superAdmin.getSuUserName() + " " + superAdmin.getSuUserPwd());
         JSONObject resultJson = new JSONObject();
         int ret = superAdminService.insertAccount(superAdmin);
+        if(ret > 0) {
+            resultJson.put("flag", true);
+        } else {
+            resultJson.put("flag", false);
+        }
+        writeJSON2Response(resultJson, response);
+    }
+
+    @PostMapping(value = "/activateAccount")
+    public void changeAdminStatus(@RequestBody Admin admin,
+                                 HttpServletRequest request,HttpServletResponse response) {
+        log.debug("FRONT END TO SERVER: " + "CHANGE STATUS");
+        JSONObject resultJson = new JSONObject();
+        int ret = superAdminService.activatedStatusSwitch(admin);
+        if(ret > 0) {
+            resultJson.put("flag", true);
+        } else {
+            resultJson.put("flag", false);
+        }
+        writeJSON2Response(resultJson, response);
+    }
+
+    @PostMapping(value = "/deleteAccount")
+    public void changeAdminStatus(@RequestBody SuperAdmin superAdmin,
+                                  HttpServletRequest request,HttpServletResponse response) {
+        log.debug("FRONT END TO SERVER: " + "DELETE");
+        JSONObject resultJson = new JSONObject();
+        int ret = superAdminService.deleteAccount(superAdmin);
         if(ret > 0) {
             resultJson.put("flag", true);
         } else {

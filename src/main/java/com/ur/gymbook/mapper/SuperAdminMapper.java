@@ -41,7 +41,7 @@ public interface SuperAdminMapper {
     /*
      * 切换Admin的Activated_status
      */
-    @Update("update ADMINISTRATOR a set a.Activated_status = #{admin.activatedStatus} where a.Ad_id = #{admin.adId}")
+    @Update("update ADMINISTRATOR a set a.Activated_status = #{activatedStatus} where a.Ad_id = #{adId}")
     int activatedStatusSwitch(Admin admin);
 
     @Update("update SUPER_ADMINISTRATOR s set s.Su_user_pwd = #{suUserPwd} where s.Su_id = #{suId}")
@@ -51,4 +51,7 @@ public interface SuperAdminMapper {
             "(#{suId}, #{suUserName}, #{suUserPwd})")
     @Options(useGeneratedKeys = true, keyColumn = "Su_id", keyProperty = "suId")
     int insertAccount(SuperAdmin superAdmin);
+
+    @Delete("delete from SUPER_ADMINISTRATOR where Su_id = #{suId}")
+    int deleteAccount(SuperAdmin superAdmin);
 }
