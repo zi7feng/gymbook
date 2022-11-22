@@ -16,7 +16,6 @@ public class SuperAdmin {
 
     @Override
     public String toString(){
-        return JSON.toJSONString(this, SerializerFeature.DisableCircularReferenceDetect,
-                SerializerFeature.WriteDateUseDateFormat);
+        return JSON.toJSONString(this, SerializerFeature.DisableCircularReferenceDetect);
     }
 }

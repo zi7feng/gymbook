@@ -5,6 +5,7 @@ import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
 import java.util.Date;
+import java.util.List;
 
 @Mapper
 @Repository
@@ -14,6 +15,15 @@ public interface VenueMapper {
      */
     @Select("select Gym_status from VENUE where Gym_name = #{gymName} and Date = #{date}")
     int isGymAvailable(@Param("gymName") String gymName, @Param("date") Date date);
+
+    @Select("select * from VENUE where Gym_name = #{gymName} and Date = #{date}")
+    List<Venue> findScheduleByNameAndDate(@Param("gymName") String gymName, @Param("date") Date date);
+
+    @Insert("insert into VENUE (Gym_name, Unit_price, Gym_status, Date) values (#{gymName}, #{unitPrice}, #{gymStatus}, #{date})")
+    int insertSchedule(@Param("gymName") String gymName, @Param("unitPrice") int unitPrice, @Param("gymStatus") int gymStatus, @Param("date") Date date);
+
+    @Update("update VENUE set Unit_price = #{unitPrice}, Gym_status = #{gymStatus} where Gym_name = #{gymName} and Date = #{date}")
+    int updateSchedule(@Param("gymName") String gymName, @Param("unitPrice") int unitPrice, @Param("gymStatus") int gymStatus, @Param("date") Date date);
 
     /*
      查看当前时间是否可以预约

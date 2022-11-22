@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <!--  <meta http-equiv="X-UA-Compatible" content="IE=edge">-->
 
-  <title>Gym Booking</title>
+  <title>Gym Management</title>
   <!-- <link rel="icon" href="img/lab_logo.svg"> -->
   <link rel="stylesheet" href="../static/css/bootstrap.css" th:href="@{/css/bootstrap.css}">
   <link rel="stylesheet" href="../static/css/admin_page.css" th:href="@{/css/admin_page.css}">
@@ -21,13 +21,16 @@
   <!-- Sidebar  -->
   <nav id="sidebar">
     <div class="sidebar-header">
-      <h3>Gym Management</h3>
+      <h3>GymBooking</h3>
     </div>
 
     <div class="brand">
       <p>
         <img src="../static/img/guides.svg" th:src="@{/img/guides.svg}" height="250%" width="250%"/>
       </p>
+    </div>
+    <div class="text-center">
+      <h4> Super Administrator</h4>
     </div>
 <!--    加入链接-->
 <!--    <ul class="list-unstyled components">-->
@@ -177,11 +180,11 @@
             <form class="form-group" id="insertForm1">
               <div class="form-group">
                 <label for="insertSuUserName">Super Admin Username</label>
-                <input type="text" class="form-control" id="insertSuUserName" placeholder="">
+                <input type="text" class="form-control" id="insertSuUserName" placeholder="" required="required">
               </div>
               <div class="form-group">
                 <label for="insertSuUserPwd">Password</label>
-                <input type="text" class="form-control" id="insertSuUserPwd" placeholder="">
+                <input type="text" class="form-control" id="insertSuUserPwd" placeholder="" required="required">
               </div>
             </form>
           </div>
@@ -213,7 +216,7 @@
 <!--              </div>-->
               <div class="form-group">
                 <label for="updateSuUserPwd">Password</label>
-                <input type="text" class="form-control" id="updateSuUserPwd" placeholder="">
+                <input type="text" class="form-control" id="updateSuUserPwd" placeholder=""  required="required">
               </div>
             </form>
           </div>
@@ -236,7 +239,7 @@
             <form class="form-group" id="updateForm2">
               <div class="form-group">
                 <label for="updateActivatedStatus">Status</label>
-                <input type="number" class="form-control" id="updateActivatedStatus" min="0" max="1">
+                <input type="number" class="form-control" id="updateActivatedStatus" min="0" max="1" required="required">
               </div>
             </form>
           </div>

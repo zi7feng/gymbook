@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--  <meta http-equiv="X-UA-Compatible" content="IE=edge">-->
+
+    <title>Gym Management</title>
+    <!-- <link rel="icon" href="img/lab_logo.svg"> -->
+    <link rel="stylesheet" href="../static/css/bootstrap.css" th:href="@{/css/bootstrap.css}">
+    <link rel="stylesheet" href="../static/css/admin_page.css" th:href="@{/css/admin_page.css}">
+    <link rel="stylesheet" href="../static/css/bootstrap-table.css" th:href="@{/css/bootstrap-table.css}">
+    <link rel="stylesheet" href="../static/css/bootstrap-datepicker.min.css"
+          th:href="@{/css/bootstrap-datepicker.min.css}">
+    <script src="../static/js/solid.js" th:src="@{/js/solid.js}"></script>
+    <script src="../static/js/fontawesome.js" th:src="@{/js/fontawesome.js}"></script>
+</head>
+
+<body>
+<div class="wrapper">
+    <!-- Sidebar  -->
+    <nav id="sidebar">
+        <div class="sidebar-header">
+            <h3>GymBooking</h3>
+        </div>
+
+        <div class="brand">
+            <p>
+                <img src="../static/img/guides.svg" th:src="@{/img/guides.svg}" height="250%" width="250%"/>
+            </p>
+        </div>
+        <!--    加入链接-->
+        <!--    <ul class="list-unstyled components">-->
+        <!--      <li>-->
+        <!--        <a href="company.html">已认证企业管理管理</a>-->
+        <!--      </li>-->
+        <!--      <li>-->
+        <!--        <a href="apply.html">待认证企业审批</a>-->
+        <!--      </li>-->
+        <!--    </ul>-->
+        <div class="text-center">
+            <h4>Administrator</h4>
+        </div>
+        <ul class="list-unstyled CTAs">
+            <li>
+                <button class="btn btn-info btn-block" id="logout">
+                    <i class="fas fa-sign-out-alt"></i>
+                    Logout
+                </button>
+            </li>
+        </ul>
+
+    </nav>
+
+    <!-- Page Content  -->
+    <div id="content">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container-fluid">
+                <button type="button" id="sidebarCollapse" class="btn btn-info">
+                    <i class="fas fa-align-left"></i>
+                    <span>Menu</span>
+                </button>
+
+            </div>
+        </nav>
+
+        <!--数据表1-->
+        <div id="toolbar1">
+            <button type="button" class="btn btn-secondary" id="searchButtons" data-toggle="modal" data-target="#searchModal1">
+                <i class="fa fa-search" aria-hidden="true"></i>
+                Search
+            </button>
+            <button type="button" class="btn btn-info" id="insertBtn1" data-toggle="modal" data-target="#insertModal1">
+                <i class="fa fa-plus-circle" aria-hidden="true"></i>
+                Add
+            </button>
+            <button type="button" class="btn btn-primary" id="updateBtn1">
+                <i class="fas fa-edit"></i>
+                Edit
+            </button>
+            <!--            <button type="button" class="btn btn-danger" id="deleteBtn1">-->
+            <!--                <i class="fa fa-trash" aria-hidden="true"></i>-->
+            <!--                Delete-->
+            <!--            </button>-->
+        </div>
+        <h4>Venue Schedule</h4>
+        <table id="table1"
+               data-toggle="true"
+               data-pagination="true"
+               data-locale="zh_CN"
+               data-show-toggle="true"
+               data-show-columns="true"
+               data-sort-name="id"
+               data-sort-order="asc"
+               data-toolbar="#toolbar1"
+               data-id-field="id"
+               data-check-on-init="false"
+               data-click-to-select="true">
+            <thead>
+            <tr>
+                <th data-field="state" data-checkbox="true">choose all</th>
+                <!--                <th data-field="gymId" data-sortable="true">ID</th>-->
+                <th data-field="gymName" data-sortable="true">Venue Name</th>
+                <th data-field="unitPrice" data-sortable="true">Unit Price</th>
+                <th data-field="date" data-sortable="true">Date</th>
+                <th data-field="gymStatus" data-sortable="true">Status</th>
+                <th data-field="fourteen" data-sortable="true">14:00-15:00</th>
+                <th data-field="fifteen" data-sortable="true">15:00-16:00</th>
+                <th data-field="sixteen" data-sortable="true">16:00-17:00</th>
+                <th data-field="seventeen" data-sortable="true">17:00-18:00</th>
+                <th data-field="eighteen" data-sortable="true">18:00-19:00</th>
+                <th data-field="nineteen" data-sortable="true">19:00-20:00</th>
+                <th data-field="twenty" data-sortable="true">20:00-21:00</th>
+            </tr>
+            </thead>
+        </table>
+
+        <div class="alert  fade show" role="alert" id="mResult1"></div>
+
+
+        <!--数据表2-->
+        <div id="toolbar2">
+            <button type="button" class="btn btn-success" id="refreshBtn2">
+                <i class="fas fa-sync" aria-hidden="true"></i>
+                Refresh
+            </button>
+            <!--            <button type="button" class="btn btn-info" id="insertBtn" data-toggle="modal" data-target="#insertModal">-->
+            <!--                <i class="fa fa-plus-circle" aria-hidden="true"></i>-->
+            <!--                添加-->
+            <!--            </button>-->
+            <button type="button" class="btn btn-primary" id="updateBtn2">
+                <i class="fas fa-edit"></i>
+                Edit
+            </button>
+            <!--            <button type="button" class="btn btn-warning" id="repairBtn">-->
+            <!--                <i class="fa fa-wrench" aria-hidden="true"></i>-->
+            <!--                维修-->
+            <!--            </button>-->
+            <!--      <button class="btn btn-secondary dropdown-toggle" type="button" id="searchButtons2" data-toggle="dropdown">-->
+            <!--        <i class="fa fa-search" aria-hidden="true"></i>-->
+            <!--        Search-->
+            <!--      </button>-->
+
+            <!--      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">-->
+            <!--        <button type="button" class="dropdown-item" id="dateSearchBtn2" data-toggle="modal"-->
+            <!--                data-target="#findByKeywordModal">-->
+            <!--          <i class="fa fa-search-plus" aria-hidden="true"></i>-->
+            <!--          Fuzz Search-->
+            <!--        </button>-->
+            <!--      </div>-->
+        </div>
+        <h4>Reservation Record</h4>
+        <table id="table2"
+               data-toggle="true"
+               data-pagination="true"
+               data-locale="zh_CN"
+               data-show-toggle="true"
+               data-show-columns="true"
+               data-sort-name="id"
+               data-sort-order="asc"
+               data-toolbar="#toolbar2"
+               data-id-field="id"
+               data-check-on-init="false"
+               data-click-to-select="true">
+            <thead>
+            <tr>
+                <th data-field="state2" data-checkbox="true"></th>
+                <th data-field="adId" data-sortable="true">ID</th>
+                <th data-field="activatedStatus" data-sortable="true">Gym Name</th>
+                <th data-field="adminName" data-sortable="true">Username</th>
+                <th data-field="adminPwd" data-sortable="true">Visit Date</th>
+                <th data-field="adminPhone" data-sortable="true">Visit Time</th>
+                <th data-field="adminEmail" data-sortable="true">Create Time</th>
+
+            </tr>
+            </thead>
+        </table>
+
+        <div class="alert  fade show" role="alert" id="mResult2"></div>
+
+        <!--搜索数据1 -->
+        <div class="modal fade" id="searchModal1" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Search Schedule</h5>
+                    </div>
+                    <div class="modal-body">
+                        <form class="form-group" id="searchForm1">
+                            <div class="form-group">
+                                <label for="searchDate">Date</label>
+                                <input type="date" class="form-control" id="searchDate" placeholder="" required="required">
+                            </div>
+                            <div class="form-group">
+                                <label for="searchGymName">Venue Name</label>
+                                <input type="text" class="form-control" id="searchGymName" placeholder="" list="data-list1" required="required">
+                                <datalist id = "data-list1">
+                                    <option>venue 1</option>
+                                    <option>venue 2</option>
+                                </datalist>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" id="searchSave1">Search</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--添加数据1 -->
+        <div class="modal fade" id="insertModal1" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Add Schedule</h5>
+                    </div>
+                    <div class="modal-body">
+                        <form class="form-group" id="insertForm1">
+                            <div class="form-group">
+                                <label for="insertGymName">Name</label>
+                                <input type="text" class="form-control" id="insertGymName" placeholder="" list="data-list2" required="required">
+                                <datalist id="data-list2">
+                                    <option>venue 1</option>
+                                    <option>venue 2</option>
+                                </datalist>
+                            </div>
+                            <div class="form-group">
+                                <label for="insertDate">Date</label>
+                                <input type="date" class="form-control" id="insertDate" placeholder="" required="required">
+                            </div>
+                            <div class="form-group">
+                                <label for="insertUnitPrice">Unit Price</label>
+                                <input type="number" class="form-control" id="insertUnitPrice" placeholder="" min="0" max="100" required="required">
+                            </div>
+                            <div class="form-group">
+                                <label for="insertGymStatus">Status</label>
+                                <input type="number" class="form-control" id="insertGymStatus" placeholder="" min="0" max="1" required="required">
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" id="insertSave1">Add</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!--更新数据1-->
+        <div class="modal fade" id="updateModal1" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Edit Schedule</h5>
+                    </div>
+                    <div class="modal-body">
+                        <form class="form-group" id="updateForm1">
+                            <div class="form-group">
+                                <label for="updateUnitPrice">Unit Price</label>
+                                <input type="number" class="form-control" id="updateUnitPrice" placeholder="" min="0" max="100" required="required">
+                            </div>
+                            <div class="form-group">
+                                <label for="updateGymStatus">Status</label>
+                                <input type="number" class="form-control" id="updateGymStatus" placeholder="" min="0" max="1" required="required">
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" id="updateSave1">Confirm</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--更新数据2-->
+        <div class="modal fade" id="updateModal2" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Change Admin Status</h5>
+                    </div>
+                    <div class="modal-body">
+                        <form class="form-group" id="updateForm2">
+                            <div class="form-group">
+                                <label for="updateActivatedStatus">Status</label>
+                                <input type="number" class="form-control" id="updateActivatedStatus" min="0" max="1">
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" id="updateSave2">Confirm</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--删除数据1-->
+        <div class="modal fade" id="deleteModal1" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Delete Super Admin</h5>
+                    </div>
+                    <div class="modal-body">
+                        <h6>Do you want to delete it?</h6>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" id="deleteSave1">Confirm</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="../static/js/jquery-3.4.0.min.js" th:src="@{/js/jquery-3.4.0.min.js}"></script>
+<script src="../static/js/bootstrap.bundle.js" th:src="@{/js/bootstrap.bundle.js}"></script>
+<script src="../static/js/bootstrap-table.js" th:src="@{/js/bootstrap-table.js}"></script>
+<script src="../static/js/bootstrap-table-locale-all.js" th:src="@{/js/bootstrap-table-locale-all.js}"></script>
+<script src="../static/js/bootbox.min.js" th:src="@{/js/bootbox.min.js}"></script>
+<script src="../static/js/bootbox.locales.min.js" th:src="@{/js/bootbox.locales.min.js}"></script>
+<script src="../static/js/bootstrap-datepicker.min.js" th:src="@{/js/bootstrap-datepicker.min.js}"></script>
+<script src="../static/js/superAdminPage.js" th:src="@{/js/adminPage.js}"></script>
+
+<script>
+    $(document).ready(function () {
+        $.ajaxSetup({
+            complete: function (xhr, status) {
+                //拦截器实现超时跳转到登录页面
+                // 通过xhr取得响应头
+                var REDIRECT = xhr.getResponseHeader("REDIRECT");
+                // alert(REDIRECT);
+                //如果响应头中包含 REDIRECT 则说明是拦截器返回的
+                if (REDIRECT == "REDIRECT") {
+                    var win = window;
+                    while (win != win.top) {
+                        win = win.top;
+                    }
+                    //重新跳转到拦截器中的路径
+                    win.location.href = xhr.getResponseHeader("CONTEXTPATH");
+                }
+            }
+        });
+
+
+        $('#sidebarCollapse').on('click', function () {
+            $('#sidebar').toggleClass('active');
+        })
+
+        $('#logout').click(function () {
+            $.ajax({
+                type: "post",
+                url: getPath() + "/superAdmin/logout",
+                async: false,
+                dataType: "json",
+                success: function (data) {
+                    if (data.flag)
+                        location.href = "/";
+                },
+                error: function () {
+
+                }
+            })
+        });
+    });
+</script>
+</body>
+
+</html>

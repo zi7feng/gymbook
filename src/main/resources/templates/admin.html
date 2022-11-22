@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Super Admin | Sign in</title>
+    <title>Admin | Sign in</title>
     <link rel="stylesheet" href="../static/css/bootstrap.css" th:href="@{/css/bootstrap.css}">
     <link rel="stylesheet" href="../static/css/my-login.css" th:href="@{/css/my-login.css}">
 </head>
@@ -19,7 +19,7 @@
                         <form class="my-login-validation form-group" th:novalidate="true">
                             <div class="form-group">
                                 <label for="username">Username</label>
-                                <input id="username" class="form-control" name="username" value="">
+                                <input id="username" class="form-control" name="adminName" value="">
                                 <div class="invalid-feedback">
                                     Invalid Username!
                                 </div>
@@ -27,7 +27,7 @@
 
                             <div class="form-group">
                                 <label for="username">Password</label>
-                                <input id="password" type="password" class="form-control" name="password">
+                                <input id="password" type="password" class="form-control" name="adminPwd">
                                 <div class="invalid-feedback" id="pw-feedback">
                                     Password Can't be Empty!
                                 </div>
@@ -124,7 +124,7 @@
         if (flag) {
             $.ajax({
                 type: "post",
-                url: getPath() + "/superAdmin/login",
+                url: getPath() + "/admin/login",
                 async: false,
                 dataType: "json",
                 data: $("form").serialize(),
@@ -138,7 +138,7 @@
                             $.cookie("password", "", {expires: -1});
                         }$('#loginResult').addClass('alert-success');
                         $('#loginResult').html('login successful!');
-                        setTimeout(window.location.href = "./superAdminPage.html", 5000);
+                        setTimeout(window.location.href = "./adminPage.html", 5000);
                     }else {
                         $('#password').addClass('is-invalid');
                         $('#pw-feedback').html('wrong password!');

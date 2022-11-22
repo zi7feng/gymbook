@@ -16,17 +16,14 @@ mybatis:
   configuration:
     map-underscore-to-camel-case: true
 
-
-
-
-
-
-#showSQL
 logging:
   level:
     com:
       ur:
         gymbook:
           mapper: debug
+
+
+
 server:
   port: 8081

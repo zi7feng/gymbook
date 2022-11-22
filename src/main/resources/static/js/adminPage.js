@@ -8,19 +8,21 @@ function getPath() {
 }
 
 $(document).ready(function () {
-    initTable1();
+    searchTable1();
 });
 
 $(document).ready(function () {
-    initTable2();
+    searchTable2();
 });
 
-// 加载Super Admin表格
-function initTable1() {
+// 表格1搜索
+function searchTable1() {
+    var gymName = $("#searchGymName").val();
+    var date = $("#searchDate").val();
     $('#table1').bootstrapTable('destroy');
     $("#table1").bootstrapTable({
-        method: "get",
-        url: getPath() + "/superAdmin/listSu",
+        method: "post",
+        url: getPath() + "/admin/findScheduleByNameAndDate",
         cache: false,
         pagination: true, //启动分页
         pageList: "All", //记录数可选列表
@@ -30,6 +32,7 @@ function initTable1() {
         queryParamsType: "limit",
         clickToSelect: true,
         locale: 'en-US',
+        showRefresh: true,
         //checkboxHeader: false,
         //singleSelect: true,
         queryParams: function queryParams(params) {   //设置查询参数
@@ -39,10 +42,15 @@ function initTable1() {
                 search: params.search,
                 sort: params.sort,
                 order: params.order,
+                gymName: gymName,
+                date: date
             };
             return param;
         },
         onLoadSuccess: function () {  //加载成功时执行
+            $('#searchModal1').modal("hide");
+            $('#searchGymName').val('');
+            $('#searchDate').val('');
             $('#mResult1').addClass('alert-success');
             $('#mResult1').html("Success!");
             setTimeout(function () {
@@ -51,6 +59,8 @@ function initTable1() {
             }, 5000);
         },
         onLoadError: function () {  //加载失败时执行
+            $('#searchModal1').modal("hide");
+
             $('#mResult1').addClass('alert-danger');
             $('#mResult1').html("Server Failed!");
             setTimeout(function () {
@@ -62,13 +72,13 @@ function initTable1() {
 }
 
 
-// 刷新Super Admin表格
-$('#refreshBtn1').click(function () {
-    initTable1();
+// 搜索保存刷新表1
+$('#searchSave1').click(function () {
+    searchTable1();
 });
 
-// 加载Admin表格
-function initTable2() {
+// 表格2搜索
+function searchTable2() {
     $('#table2').bootstrapTable('destroy');
     $("#table2").bootstrapTable({
         method: "get",
@@ -95,6 +105,7 @@ function initTable2() {
             return param;
         },
         onLoadSuccess: function () {  //加载成功时执行
+            $('#searchModal2').modal("hide");
             $('#mResult2').addClass('alert-success');
             $('#mResult2').html("Success!");
             setTimeout(function () {
@@ -103,6 +114,7 @@ function initTable2() {
             }, 5000);
         },
         onLoadError: function () {  //加载失败时执行
+            $('#searchModal2').modal("hide");
             $('#mResult2').addClass('alert-danger');
             $('#mResult2').html("Server Failed!");
             setTimeout(function () {
@@ -114,32 +126,36 @@ function initTable2() {
 }
 
 // 刷新Admin表格
-$('#refreshBtn2').click(function () {
-    initTable2();
+$('#searchBtn2').click(function () {
+    searchTable2();
 });
 
-//Super Admin表格插入保存
+// 插入Schedule保存
 $('#insertSave1').click(function () {
-    var insertSuUserName = $('#insertSuUserName').val();
-    var insertSuUserPwd = $('#insertSuUserPwd').val();
+    var gymName = $('#insertGymName').val();
+    var unitPrice = $('#insertUnitPrice').val();
+    var gymStatus = $('#insertGymStatus').val();
+    var date = $('#insertDate').val();
 
     $.ajax({
         type: "post",
-        url: getPath() + "/superAdmin/insertAccount",
+        url: getPath() + "/admin/insertSchedule",
         async: false,
         dataType: 'json',
         contentType: 'application/json',
         data: JSON.stringify({
-            // "id": insertId,
-            "suId": 0,
-            "suUserName": insertSuUserName,
-            "suUserPwd": insertSuUserPwd
+            "gymName": gymName,
+            "unitPrice": unitPrice,
+            "gymStatus": gymStatus,
+            "date": date
         }),
-        success: function (data) {
+        success: function (data, xhr) {
             if (data.flag) {
                 $('#insertModal1').modal("hide");
-                $('#insertSuUserName').val('');
-                $('#insertSuUserPwd').val('');
+                $('#insertGymName').val('');
+                $('#insertUnitPrice').val('');
+                $('#insertGymStatus').val('');
+                $('#insertDate').val('');
                 bootbox.alert({
                     centerVertical: true,
                     title: "Success",
@@ -155,7 +171,6 @@ $('#insertSave1').click(function () {
                     locale: "en_US"
                 })
             }
-            initTable1();
         },
         error: function () {
             $('#insertModal1').modal("hide");
@@ -170,7 +185,7 @@ $('#insertSave1').click(function () {
 });
 
 
-// 更新Super Admin信息输入
+// 更新Schedule信息
 $('#updateBtn1').click(function () {
     var rows = $('#table1').bootstrapTable('getSelections');
     if (rows.length !== 1) {
@@ -181,9 +196,8 @@ $('#updateBtn1').click(function () {
             locale: "en_US"
         });
     } else {
-        //$('#updateSuId').val(rows[0]["suId"]);
-        //$('#updateSuUserName').val(rows[0]["suUserName"]);
-        $('#updateSuUserPwd').val(rows[0]["suUserPwd"]);
+        $('#updateUnitPrice').val(rows[0]["unitPrice"]);
+        $('#updateGymStatus').val(rows[0]["gymStatus"]);
         $('#updateModal1').modal("toggle");
     }
 });
@@ -191,28 +205,29 @@ $('#updateBtn1').click(function () {
 // 更新Super Admin保存
 $('#updateSave1').click(function () {
     var rows = $('#table1').bootstrapTable('getSelections');
-    var updateSuId = rows[0]["suId"];
-    var updateSuUserName = rows[0]["suUserName"]
-    var updateSuUserPwd = $('#updateSuUserPwd').val();
+    var updateGymName = rows[0]["gymName"];
+    var updateDate = rows[0]["date"]
+    var updateUnitPrice = $('#updateUnitPrice').val();
+    var updateGymStatus = $('#updateGymStatus').val();
 
 
     $.ajax({
         type: "post",
-        url: getPath() + "/superAdmin/updatePassword",
+        url: getPath() + "/admin/updateSchedule",
         async: false,
         dataType: 'json',
         contentType: 'application/json',
         data: JSON.stringify({
-            "suId": updateSuId,
-            "suUserName": updateSuUserName,
-            "suUserPwd": updateSuUserPwd
+            "gymName": updateGymName,
+            "unitPrice": updateUnitPrice,
+            "gymStatus": updateGymStatus,
+            "date": updateDate
         }),
         success: function (data) {
             if (data.flag) {
                 $('#updateModal1').modal("hide");
-                // $('#updateSuId').val('');
-                // $('#updateSuUserName').val('');
-                $('#updateSuUserPwd').val('');
+                $('#updateUnitPrice').val('');
+                $('#updateGymStatus').val('');
                 bootbox.alert({
                     centerVertical: true,
                     title: "Success",
@@ -228,11 +243,9 @@ $('#updateSave1').click(function () {
                     locale: "en-US"
                 });
             }
-            initTable1();
         },
         error: function () {
             $('#updateModal1').modal("hide");
-            $('#updateSuUserPwd').val('');
             $('#mResult1').addClass('alert-danger');
             $('#mResult1').html("Server Failed!");
             setTimeout(function () {
@@ -243,7 +256,7 @@ $('#updateSave1').click(function () {
     })
 });
 
-// 删除Super Admin信息
+// 删除
 $('#deleteBtn1').click(function () {
     var rows = $('#table1').bootstrapTable('getSelections');
     if (rows.length !== 1) {
@@ -261,119 +274,50 @@ $('#deleteBtn1').click(function () {
     }
 })
 
-// 删除Super Admin保存
-$('#deleteSave1').click(function () {
-    var rows = $('#table1').bootstrapTable('getSelections');
-    var deleteSuId = rows[0]["suId"];
-
-    $.ajax({
-        type: "post",
-        url: getPath() + "/superAdmin/deleteAccount",
-        async: false,
-        dataType: 'json',
-        contentType: 'application/json',
-        data: JSON.stringify({
-            "suId": deleteSuId,
-        }),
-        success: function (data) {
-            if (data.flag) {
-                $('#deleteModal1').modal("hide");
-                bootbox.alert({
-                    centerVertical: true,
-                    title: "Success",
-                    message: "Success!",
-                    locale: "en-US"
-                })
-            } else {
-                $('#deleteModal1').modal("hide");
-                bootbox.alert({
-                    centerVertical: true,
-                    title: "Failed",
-                    message: "Failed!",
-                    locale: "en-US"
-                });
-            }
-            initTable1();
-        },
-        error: function () {
-            $('#deleteModal1').modal("hide");
-            $('#mResult1').addClass('alert-danger');
-            $('#mResult1').html("Server Failed!");
-            setTimeout(function () {
-                $('#mResult1').removeClass('alert-danger');
-                $('#mResult1').html('');
-            }, 200);
-        }
-    })
-});
-
-// 更新Admin信息输入
-$('#updateBtn2').click(function () {
-    var rows = $('#table2').bootstrapTable('getSelections');
-    if (rows.length !== 1) {
-        bootbox.alert({
-            centerVertical: true,
-            title: "Error",
-            message: "Allow selecting only 1 row! ",
-            locale: "en_US"
-        });
-    } else {
-        //$('#updateSuId').val(rows[0]["suId"]);
-        //$('#updateSuUserName').val(rows[0]["suUserName"]);
-        $('#updateActivatedStatus').val(rows[0]["activatedStatus"]);
-        $('#updateModal2').modal("toggle");
-    }
-});
-
-// 更新Admin信息保存
-$('#updateSave2').click(function () {
-    var rows = $('#table2').bootstrapTable('getSelections');
-    var updateAdId = rows[0]["adId"];
-    var updateActivatedStatus = $('#updateActivatedStatus').val();
+// // 删除保存
+// $('#deleteSave1').click(function () {
+//     var rows = $('#table1').bootstrapTable('getSelections');
+//     var deleteSuId = rows[0]["suId"];
+//
+//     $.ajax({
+//         type: "post",
+//         url: getPath() + "/superAdmin/deleteAccount",
+//         async: false,
+//         dataType: 'json',
+//         contentType: 'application/json',
+//         data: JSON.stringify({
+//             "suId": deleteSuId,
+//         }),
+//         success: function (data) {
+//             if (data.flag) {
+//                 $('#deleteModal1').modal("hide");
+//                 bootbox.alert({
+//                     centerVertical: true,
+//                     title: "Success",
+//                     message: "Success!",
+//                     locale: "en-US"
+//                 })
+//             } else {
+//                 $('#deleteModal1').modal("hide");
+//                 bootbox.alert({
+//                     centerVertical: true,
+//                     title: "Failed",
+//                     message: "Failed!",
+//                     locale: "en-US"
+//                 });
+//             }
+//         },
+//         error: function () {
+//             $('#deleteModal1').modal("hide");
+//             $('#mResult1').addClass('alert-danger');
+//             $('#mResult1').html("Server Failed!");
+//             setTimeout(function () {
+//                 $('#mResult1').removeClass('alert-danger');
+//                 $('#mResult1').html('');
+//             }, 200);
+//         }
+//     })
+// });
 
 
-    $.ajax({
-        type: "post",
-        url: getPath() + "/superAdmin/activateAccount",
-        async: false,
-        dataType: 'json',
-        contentType: 'application/json',
-        data: JSON.stringify({
-            "adId": updateAdId,
-            "activatedStatus": updateActivatedStatus
-        }),
-        success: function (data) {
-            if (data.flag) {
-                $('#updateModal2').modal("hide");
-                // $('#updateSuId').val('');
-                // $('#updateSuUserName').val('');
-                $('#updateActivatedStatus').val('');
-                bootbox.alert({
-                    centerVertical: true,
-                    title: "Success",
-                    message: "Success!",
-                    locale: "en-US"
-                })
-            } else {
-                $('#updateModal2').modal("hide");
-                bootbox.alert({
-                    centerVertical: true,
-                    title: "Failed",
-                    message: "Failed!",
-                    locale: "en-US"
-                });
-            }
-            initTable2();
-        },
-        error: function () {
-            $('#updateModal2').modal("hide");
-            $('#updateActivatedStatus').val('');
-            $('#mResult2').addClass('alert-danger');
-            $('#mResult2').html("Server Failed!");
-            setTimeout(function () {
-                $('#mResult2').removeClass('alert-danger');
-                $('#mResult2').html('');
-            }, 200);
-        }
-    })
-});
+
