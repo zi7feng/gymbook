@@ -16,4 +16,10 @@ public interface IAdminService {
 
     int updateSchedule(String gymName, int unitPrice, int gymStatus, Date date);
 
+    int insertAdmin(String adminName, String adminPwd);
+
+    Admin findAdminByName(String adminName);
+
+    int updateAdminMyself(int adId, String adminPwd, String adminPhone, String adminEmail);
+
 }

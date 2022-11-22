@@ -36,4 +36,28 @@ public class AdminServiceImpl implements IAdminService {
     public int updateSchedule(String gymName, int unitPrice, int gymStatus, Date date) {
         return venueMapper.updateSchedule(gymName, unitPrice, gymStatus, date);
     }
+
+    @Override
+    public int insertAdmin(String adminName, String adminPwd) {
+        Admin admin = new Admin();
+        admin.setAdminName(adminName);
+        admin.setAdminPwd(adminPwd);
+        return adminMapper.insertAdmin(admin);
+    }
+
+    @Override
+    public Admin findAdminByName(String adminName) {
+        return adminMapper.findAdminByName(adminName);
+    }
+
+    @Override
+    public int updateAdminMyself(int adId, String adminPwd, String adminPhone, String adminEmail) {
+        Admin admin = new Admin();
+        admin.setAdId(adId);
+        admin.setAdminPwd(adminPwd);
+        admin.setAdminPhone(adminPhone);
+        admin.setAdminEmail(adminEmail);
+        return adminMapper.updateAdminMyself(admin);
+    }
+
 }

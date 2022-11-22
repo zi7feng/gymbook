@@ -179,6 +179,65 @@
 
         <div class="alert  fade show" role="alert" id="mResult2"></div>
 
+        <!--数据表3-->
+        <div id="toolbar3">
+            <button type="button" class="btn btn-success" id="refreshBtn3">
+                <i class="fas fa-sync" aria-hidden="true"></i>
+                Refresh
+            </button>
+            <!--            <button type="button" class="btn btn-info" id="insertBtn" data-toggle="modal" data-target="#insertModal">-->
+            <!--                <i class="fa fa-plus-circle" aria-hidden="true"></i>-->
+            <!--                添加-->
+            <!--            </button>-->
+            <button type="button" class="btn btn-primary" id="updateBtn3">
+                <i class="fas fa-edit"></i>
+                Edit
+            </button>
+            <!--            <button type="button" class="btn btn-warning" id="repairBtn">-->
+            <!--                <i class="fa fa-wrench" aria-hidden="true"></i>-->
+            <!--                维修-->
+            <!--            </button>-->
+            <!--      <button class="btn btn-secondary dropdown-toggle" type="button" id="searchButtons2" data-toggle="dropdown">-->
+            <!--        <i class="fa fa-search" aria-hidden="true"></i>-->
+            <!--        Search-->
+            <!--      </button>-->
+
+            <!--      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">-->
+            <!--        <button type="button" class="dropdown-item" id="dateSearchBtn2" data-toggle="modal"-->
+            <!--                data-target="#findByKeywordModal">-->
+            <!--          <i class="fa fa-search-plus" aria-hidden="true"></i>-->
+            <!--          Fuzz Search-->
+            <!--        </button>-->
+            <!--      </div>-->
+        </div>
+        <h4>Personal Information</h4>
+        <table id="table3"
+               data-toggle="true"
+               data-pagination="true"
+               data-locale="zh_CN"
+               data-show-toggle="true"
+               data-show-columns="true"
+               data-sort-name="id"
+               data-sort-order="asc"
+               data-toolbar="#toolbar3"
+               data-id-field="id"
+               data-check-on-init="false"
+               data-click-to-select="true">
+            <thead>
+            <tr>
+                <th data-field="state3" data-checkbox="true"></th>
+                <th data-field="adId" data-sortable="true">Admin ID</th>
+                <th data-field="adminName" data-sortable="true">Admin Name</th>
+                <th data-field="adminPwd" data-sortable="true">Password</th>
+                <th data-field="adminPhone" data-sortable="true">Phone</th>
+                <th data-field="adminEmail" data-sortable="true">Email</th>
+
+            </tr>
+            </thead>
+        </table>
+
+        <div class="alert  fade show" role="alert" id="mResult3"></div>
+
         <!--搜索数据1 -->
         <div class="modal fade" id="searchModal1" tabindex="-1" role="dialog">
             <div class="modal-dialog modal-dialog-centered" role="document">
@@ -295,6 +354,37 @@
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                         <button type="button" class="btn btn-primary" id="updateSave2">Confirm</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--更新数据3-->
+        <div class="modal fade" id="updateModal3" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Change My Personal Information</h5>
+                    </div>
+                    <div class="modal-body">
+                        <form class="form-group" id="updateForm3">
+                            <div class="form-group">
+                                <label for="updateAdminPwd">Password</label>
+                                <input type="text" class="form-control" id="updateAdminPwd">
+                            </div>
+                            <div class="form-group">
+                                <label for="updateAdminPwd">Phone</label>
+                                <input type="text" class="form-control" id="updateAdminPhone">
+                            </div>
+                            <div class="form-group">
+                                <label for="updateAdminEmail">Email</label>
+                                <input type="text" class="form-control" id="updateAdminEmail">
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" id="updateSave3">Confirm</button>
                     </div>
                 </div>
             </div>

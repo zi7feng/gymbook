@@ -44,7 +44,7 @@ public class AdminController {
         Admin admin = adminService.findByNameAndPassword(username,password);
         if(admin != null && admin.getActivatedStatus() != 0) {
             HttpSession session = request.getSession();
-            session.setAttribute("AdminObj",admin);
+            session.setAttribute("AdminObj", admin);
             resultJson.put("result", true);
         } else {
             resultJson.put("result", false);
@@ -113,4 +113,45 @@ public class AdminController {
         }
         writeJSON2Response(resultJson, response);
     }
+
+    @PostMapping(value = "/adminRegister")
+    public void adminRegister(@RequestParam(value = "adminName") String adminName,
+                              @RequestParam(value = "adminPwd") String adminPwd,
+                               HttpServletRequest request,HttpServletResponse response) {
+        log.debug("FRONT END TO SERVER: " + "UPDATE SCHEDULE");
+        JSONObject resultJson = new JSONObject();
+        Admin ret1 = adminService.findAdminByName(adminName);
+        if(ret1 != null) {
+            resultJson.put("result", false);
+        }else{
+            resultJson.put("result", true);
+            int ret2 = adminService.insertAdmin(adminName, adminPwd);
+            if(ret2 > 0) {
+                resultJson.put("flag", true);
+            } else {
+                resultJson.put("flag", false);
+            }
+        }
+        writeJSON2Response(resultJson, response);
+    }
+
+    @PostMapping(value = "/updateAdminMyself")
+    public void updateAdminMyself(@RequestBody String parameters,
+                               HttpServletRequest request,HttpServletResponse response) {
+        log.debug("FRONT END TO SERVER: " + "UPDATE SCHEDULE");
+        JSONObject paraJson = JSONObject.parseObject(parameters);
+        String adminPwd = paraJson.getString("adminPwd");
+        int adId = paraJson.getIntValue("adId");
+        String adminEmail = paraJson.getString("adminEmail");
+        String adminPhone = paraJson.getString("adminPhone");
+        JSONObject resultJson = new JSONObject();
+        int ret = adminService.updateAdminMyself(adId, adminPwd, adminPhone, adminEmail);
+        if(ret > 0) {
+            resultJson.put("flag", true);
+        } else {
+            resultJson.put("flag", false);
+        }
+        writeJSON2Response(resultJson, response);
+    }
+
 }

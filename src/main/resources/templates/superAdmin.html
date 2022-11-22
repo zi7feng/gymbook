@@ -138,7 +138,7 @@
                             $.cookie("password", "", {expires: -1});
                         }$('#loginResult').addClass('alert-success');
                         $('#loginResult').html('login successful!');
-                        setTimeout(window.location.href = "./superAdminPage.html", 5000);
+                        setTimeout(function(){window.location.href = "./superAdminPage.html";}, 500);
                     }else {
                         $('#password').addClass('is-invalid');
                         $('#pw-feedback').html('wrong password!');

@@ -21,6 +21,7 @@ public class mvc_config implements WebMvcConfigurer {
         registry.addViewController("/superAdminPage.html").setViewName("superAdminPage");
         registry.addViewController("/admin.html").setViewName("admin");
         registry.addViewController("/adminPage.html").setViewName("adminPage");
+        registry.addViewController("/adminRegister.html").setViewName("adminRegister");
     }
 
     // WebMvcConfigurerAdapter 这个类在SpringBoot2.0已过时，官方推荐直接实现WebMvcConfigurer 这个接口
