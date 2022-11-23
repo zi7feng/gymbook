@@ -9,19 +9,12 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class test {
-    private int userIdddd;
-    private String userName;
-    private String userPwd;
-    private int age;
-    private String userPhone;
-    private int gender;
-    private String userMail;
-//    private int t;
+public class Control {
+    private int suId;
+    private int adID;
 
     @Override
-    public String toString() {
-        JSON.DEFFAULT_DATE_FORMAT = "yyyy-MM-dd";
+    public String toString(){
         return JSON.toJSONString(this, SerializerFeature.DisableCircularReferenceDetect,
                 SerializerFeature.WriteDateUseDateFormat);
     }

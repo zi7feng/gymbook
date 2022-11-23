@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Super Admin | Sign in</title>
+    <link rel="stylesheet" href="../static/css/bootstrap.css" th:href="@{/css/bootstrap.css}">
+    <link rel="stylesheet" href="../static/css/my-login.css" th:href="@{/css/my-login.css}">
+</head>
+
+<body class="my-login-page">
+<section class="h-100">
+    <div class="container h-100">
+        <div class="row justify-content-md-center h-100">
+            <div class="card-wrapper">
+                <div class="card fat">
+                    <div class="card-body">
+                        <h4 class="card-title">Super Admin Login</h4>
+                        <form class="my-login-validation form-group" th:novalidate="true">
+                            <div class="form-group">
+                                <label for="username">Username</label>
+                                <input id="username" class="form-control" name="username" value="">
+                                <div class="invalid-feedback">
+                                    Invalid Username!
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="username">Password</label>
+                                <input id="password" type="password" class="form-control" name="password">
+                                <div class="invalid-feedback" id="pw-feedback">
+                                    Password Can't be Empty!
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="custom-checkbox custom-control">
+                                    <input type="checkbox" id="show-pwd" class="custom-control-input" onclick="showPassword()">
+                                    <label for="show-pwd" class="custom-control-label">Show Password</label>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="custom-checkbox custom-control">
+                                    <input type="checkbox" id="remember" class="custom-control-input">
+                                    <label for="remember" class="custom-control-label">Remember me</label>
+                                </div>
+                            </div>
+
+                            <div class="form-group m-0">
+                                <input id="loginBtn" class="btn btn-primary btn-block" value="log in" type="button">
+                            </div>
+                            <!--                            <div class="mt-4 text-center">-->
+                            <!--                                还没有账户? 注册一个吧!&nbsp;&nbsp;<a href="register.html">注册</a>-->
+                            <!--                            </div>-->
+                            <div class="alert" role="alert" id="loginResult" style="margin: 20%">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="footer">
+                    Gym Booking
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script src="../static/js/jquery-3.4.0.min.js" th:src="@{/js/jquery-3.4.0.min.js}"></script>
+<script src="../static/js/bootstrap.bundle.js" th:src="@{/js/bootstrap.bundle.js}"></script>
+<script src="../static/js/jquery.cookie.js" th:src="@{/js/jquery.cookie.js}"></script>
+
+<script>
+    function showPassword() {
+        let x = window.document.getElementById("password");
+        if (x.type === "password") {
+            x.type = "text";
+        } else {
+            x.type = "password";
+        }
+    }
+
+    function getPath() {
+        var curPath = window.document.location.href;
+        var pathName = window.document.location.pathname;
+        var pos = curPath.indexOf(pathName);
+        var localhostPath = curPath.substring(0, pos);
+        var projectName = pathName.substring(0, pathName.substr(1).indexOf('/') + 1);
+        return localhostPath + projectName;
+    };
+
+    var username = $.cookie('username');
+    var password = $.cookie('password');
+
+    $('#username').val(username);
+    $('#password').val(password);
+    if (username != null && password != null) {//选中保存密码的复选框
+        $("#remember").attr('checked', true);
+    }
+
+    $('#username').focus(function () {
+        $('#username').removeClass('is-invalid');
+    })
+
+    $('#password').focus(function () {
+        $('#password').removeClass('is-invalid');
+    });
+
+
+
+
+    $('#loginBtn').click(function () {
+        var flag = true;
+        var username = $('#username').val();
+        var password = $('#password').val();
+        if (username == '') {
+            $('#username').addClass('is-invalid');
+            flag = false;
+        }
+        if (password == '') {
+            $('#password').addClass('is-invalid');
+            flag = false;
+        }
+
+        if (flag) {
+            $.ajax({
+                type: "post",
+                url: getPath() + "/superAdmin/login",
+                async: false,
+                dataType: "json",
+                data: $("form").serialize(),
+                success: function (data) {
+                    if (data.result) {
+                        if ($("#remember").is(":checked")) {
+                            $.cookie("username", username, {expires: 7});
+                            $.cookie("password", password, {expires: 7});
+                        } else {
+                            $.cookie("username", "", {expires: -1});
+                            $.cookie("password", "", {expires: -1});
+                        }$('#loginResult').addClass('alert-success');
+                        $('#loginResult').html('login successful!');
+                        setTimeout(function(){window.location.href = "./superAdminPage.html";}, 500);
+                    }else {
+                        $('#password').addClass('is-invalid');
+                        $('#pw-feedback').html('wrong password!');
+                    }
+                },
+                error: function () {
+                    $('#loginResult').addClass('alert-danger');
+                    $('#loginResult').html('connection failed');
+                }
+            });
+        }
+    })
+
+</script>
+</body>
+</html>
