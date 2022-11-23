@@ -10,13 +10,13 @@ public interface MaintainMapper {
     /*
     根据Ad_id查看Maintain关系
      */
-    @Select("select * from MAINTAIN where Ad_id = #{adId} ordered by desc Date")
+    @Select("select * from MAINTAIN where Ad_id = #{adId}")
     Maintain findMaintainByAdId(int adId);
 
     /*
     根据Gym_id查看Maintain关系
      */
-    @Select("select * from MAINTAIN where Gym_id = #{gymId} ordered by desc Date")
+    @Select("select * from MAINTAIN where Gym_id = #{gymId}")
     Maintain findMaintainByGymId(int gymId);
 
     /*

@@ -129,4 +129,18 @@ public class SuperAdminController {
         writeJSON2Response(resultJson, response);
     }
 
+    @PostMapping(value = "/deleteAdminAccount")
+    public void deleteAdminAccount(@RequestBody Admin admin,
+                                  HttpServletRequest request,HttpServletResponse response) {
+        log.debug("FRONT END TO SERVER: " + "DELETE ADMIN");
+        JSONObject resultJson = new JSONObject();
+        int ret = superAdminService.deleteAdminAccount(admin);
+        if(ret > 0) {
+            resultJson.put("flag", true);
+        } else {
+            resultJson.put("flag", false);
+        }
+        writeJSON2Response(resultJson, response);
+    }
+
 }

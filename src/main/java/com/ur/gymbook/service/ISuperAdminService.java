@@ -19,4 +19,6 @@ public interface ISuperAdminService {
     int insertAccount(SuperAdmin superAdmin);
 
     int deleteAccount(SuperAdmin superAdmin);
+
+    int deleteAdminAccount(Admin admin);
 }

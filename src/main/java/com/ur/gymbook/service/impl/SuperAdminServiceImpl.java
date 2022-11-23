@@ -49,4 +49,9 @@ public class SuperAdminServiceImpl implements ISuperAdminService{
     public int deleteAccount(SuperAdmin superAdmin) {
         return superAdminMapper.deleteAccount(superAdmin);
     }
+
+    @Override
+    public int deleteAdminAccount(Admin admin) {
+        return superAdminMapper.deleteAdminAccount(admin);
+    }
 }

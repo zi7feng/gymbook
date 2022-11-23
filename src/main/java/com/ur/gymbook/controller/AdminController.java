@@ -2,6 +2,7 @@ package com.ur.gymbook.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.ur.gymbook.model.Admin;
+import com.ur.gymbook.model.ReservationRecord;
 import com.ur.gymbook.model.SuperAdmin;
 import com.ur.gymbook.model.Venue;
 import com.ur.gymbook.service.IAdminService;
@@ -152,6 +153,16 @@ public class AdminController {
             resultJson.put("flag", false);
         }
         writeJSON2Response(resultJson, response);
+    }
+
+    @PostMapping(value = "/findRecordByNameAndDate")
+    public List<ReservationRecord> finRecordByNameAndDate(@RequestBody String parameters,HttpServletRequest request,HttpServletResponse response) {
+        JSONObject paraJson = JSONObject.parseObject(parameters);
+        String gymName = paraJson.getString("gymName");
+        Date visitDate = paraJson.getSqlDate("visitDate");
+        log.debug("FRONT END TO SERVER: " + "FIND RECORDS "+ gymName + " " + visitDate);
+        List<ReservationRecord> records = adminService.findRecordByNameAndDate(gymName, visitDate);
+        return records;
     }
 
 }

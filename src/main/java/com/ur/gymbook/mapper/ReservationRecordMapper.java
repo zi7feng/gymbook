@@ -12,13 +12,16 @@ public interface ReservationRecordMapper {
     /*
     查询所有预约记录
      */
-    @Select("select * from RESERVATION_RECORD ordered by desc Create_time")
+    @Select("select * from RESERVATION_RECORD")
     List<ReservationRecord> listReservationRecord();
+
+    @Select("select Id, Gym_name, User_name, User_phone, User_email, Visit_Date, Visit_time, Create_time from RESERVATION_RECORD join USER where Gym_name = #{gymName} and Visit_date = #{visitDate}")
+    List<ReservationRecord> findRecordByNameAndDate(ReservationRecord reservationRecord);
 
     /*
     根据userId查询预约记录
      */
-    @Select("select * from RESERVATION_RECORD where User_id = #{userId} ordered by desc Create_time")
+    @Select("select * from RESERVATION_RECORD where User_id = #{userId}")
     List<ReservationRecord> findRecordByUserName(int userId);
 
     /*

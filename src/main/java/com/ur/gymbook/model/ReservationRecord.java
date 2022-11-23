@@ -14,13 +14,16 @@ import java.sql.Date;
 @Data
 public class ReservationRecord {
     private int id;
-    private int gymId;
+    private String gymName;
     private int userId;
+    private String userName;
+    private String userPhone;
+    private String userEmail;
     @JSONField(format = "yyyy-MM-dd")
     private Date visitDate;
     private String visitTime;
     @JSONField(format = "yyyy-MM-dd HH:mm:ss")
-    private Date createTime;
+    private java.util.Date createTime;
 
     @Override
     public String toString(){

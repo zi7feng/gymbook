@@ -377,3 +377,67 @@ $('#updateSave2').click(function () {
         }
     })
 });
+
+// 删除Admin信息
+$('#deleteBtn2').click(function () {
+    var rows = $('#table2').bootstrapTable('getSelections');
+    if (rows.length !== 1) {
+        bootbox.alert({
+            centerVertical: true,
+            title: "Error",
+            message: "Allow selecting only 1 row! ",
+            locale: "en_US"
+        });
+    } else {
+        //$('#updateSuId').val(rows[0]["suId"]);
+        //$('#updateSuUserName').val(rows[0]["suUserName"]);
+        //$('#updateActivatedStatus').val(rows[0]["activatedStatus"]);
+        $('#deleteModal2').modal("toggle");
+    }
+})
+
+// 删除Admin保存
+$('#deleteSave2').click(function () {
+    var rows = $('#table2').bootstrapTable('getSelections');
+    var deleteAdId = rows[0]["adId"];
+
+    $.ajax({
+        type: "post",
+        url: getPath() + "/superAdmin/deleteAdminAccount",
+        async: false,
+        dataType: 'json',
+        contentType: 'application/json',
+        data: JSON.stringify({
+            "adId": deleteAdId,
+        }),
+        success: function (data) {
+            if (data.flag) {
+                $('#deleteModal2').modal("hide");
+                bootbox.alert({
+                    centerVertical: true,
+                    title: "Success",
+                    message: "Success!",
+                    locale: "en-US"
+                })
+            } else {
+                $('#deleteModal2').modal("hide");
+                bootbox.alert({
+                    centerVertical: true,
+                    title: "Failed",
+                    message: "Failed!",
+                    locale: "en-US"
+                });
+            }
+            initTable2();
+        },
+        error: function () {
+            $('#deleteModal2').modal("hide");
+            $('#mResult2').addClass('alert-danger');
+            $('#mResult2').html("Server Failed!");
+            setTimeout(function () {
+                $('#mResult2').removeClass('alert-danger');
+                $('#mResult2').html('');
+            }, 200);
+        }
+    })
+});

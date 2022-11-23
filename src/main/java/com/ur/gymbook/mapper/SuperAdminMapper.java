@@ -54,4 +54,7 @@ public interface SuperAdminMapper {
 
     @Delete("delete from SUPER_ADMINISTRATOR where Su_id = #{suId}")
     int deleteAccount(SuperAdmin superAdmin);
+
+    @Delete("delete from ADMINISTRATOR where Ad_id = #{adId}")
+    int deleteAdminAccount(Admin admin);
 }

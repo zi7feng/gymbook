@@ -90,10 +90,10 @@
            data-locale="zh_CN"
            data-show-toggle="true"
            data-show-columns="true"
-           data-sort-name="id"
+           data-sort-name="suId"
            data-sort-order="asc"
            data-toolbar="#toolbar1"
-           data-id-field="id"
+           data-id-field="suId"
            data-check-on-init="false"
            data-click-to-select="true">
       <thead>
@@ -123,6 +123,10 @@
         <i class="fas fa-edit"></i>
         Edit
       </button>
+      <button type="button" class="btn btn-danger" id="deleteBtn2">
+        <i class="fa fa-trash" aria-hidden="true"></i>
+        Delete
+      </button>
       <!--            <button type="button" class="btn btn-warning" id="repairBtn">-->
       <!--                <i class="fa fa-wrench" aria-hidden="true"></i>-->
       <!--                维修-->
@@ -147,10 +151,10 @@
            data-locale="zh_CN"
            data-show-toggle="true"
            data-show-columns="true"
-           data-sort-name="id"
+           data-sort-name="adId"
            data-sort-order="asc"
            data-toolbar="#toolbar2"
-           data-id-field="id"
+           data-id-field="adId"
            data-check-on-init="false"
            data-click-to-select="true">
       <thead>
@@ -158,7 +162,7 @@
         <th data-field="state2" data-checkbox="true"></th>
         <th data-field="adId" data-sortable="true">Admin ID</th>
         <th data-field="adminName" data-sortable="true">Username</th>
-        <th data-field="adminPwd" data-sortable="true">Password</th>
+<!--        <th data-field="adminPwd" data-sortable="true">Password</th>-->
         <th data-field="adminPhone" data-sortable="true">Phone</th>
         <th data-field="adminEmail" data-sortable="true">Email</th>
         <th data-field="activatedStatus" data-sortable="true">Status</th>
@@ -239,7 +243,7 @@
             <form class="form-group" id="updateForm2">
               <div class="form-group">
                 <label for="updateActivatedStatus">Status</label>
-                <input type="number" class="form-control" id="updateActivatedStatus" min="0" max="1" required="required">
+                <input type="number" class="form-control" id="updateActivatedStatus" min="0" max="1">
               </div>
             </form>
           </div>
@@ -268,6 +272,25 @@
         </div>
       </div>
     </div>
+
+    <!--删除数据2-->
+    <div class="modal fade" id="deleteModal2" tabindex="-1" role="dialog">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Delete Admin</h5>
+          </div>
+          <div class="modal-body">
+            <h6>Do you want to delete it?</h6>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" id="deleteSave2">Confirm</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </div>
 </div>
 

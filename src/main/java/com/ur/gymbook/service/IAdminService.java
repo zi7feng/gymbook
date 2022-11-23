@@ -1,6 +1,7 @@
 package com.ur.gymbook.service;
 
 import com.ur.gymbook.model.Admin;
+import com.ur.gymbook.model.ReservationRecord;
 import com.ur.gymbook.model.Venue;
 import org.apache.ibatis.annotations.Param;
 
@@ -21,5 +22,7 @@ public interface IAdminService {
     Admin findAdminByName(String adminName);
 
     int updateAdminMyself(int adId, String adminPwd, String adminPhone, String adminEmail);
+
+    List<ReservationRecord> findRecordByNameAndDate(String gymName, Date visitDate);
 
 }

@@ -1,8 +1,10 @@
 package com.ur.gymbook.service.impl;
 
 import com.ur.gymbook.mapper.AdminMapper;
+import com.ur.gymbook.mapper.ReservationRecordMapper;
 import com.ur.gymbook.mapper.VenueMapper;
 import com.ur.gymbook.model.Admin;
+import com.ur.gymbook.model.ReservationRecord;
 import com.ur.gymbook.model.Venue;
 import com.ur.gymbook.service.IAdminService;
 import org.springframework.stereotype.Service;
@@ -17,6 +19,10 @@ public class AdminServiceImpl implements IAdminService {
     private AdminMapper adminMapper;
     @Resource
     private VenueMapper venueMapper;
+
+    @Resource
+    private ReservationRecordMapper reservationRecordMapper;
+
     @Override
     public Admin findByNameAndPassword(String adminName, String adminPwd) {
         return adminMapper.findByNameAndPassword(adminName,adminPwd);
@@ -60,4 +66,11 @@ public class AdminServiceImpl implements IAdminService {
         return adminMapper.updateAdminMyself(admin);
     }
 
+    @Override
+    public List<ReservationRecord> findRecordByNameAndDate(String gymName, Date visitDate) {
+        ReservationRecord reservationRecord = new ReservationRecord();
+        reservationRecord.setGymName(gymName);
+        reservationRecord.setVisitDate(visitDate);
+        return reservationRecordMapper.findRecordByNameAndDate(reservationRecord);
+    }
 }

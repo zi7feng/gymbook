@@ -21,8 +21,8 @@ $(document).ready(function () {
 
 // 表格1搜索
 function searchTable1() {
-    var gymName = $("#searchGymName").val();
-    var date = $("#searchDate").val();
+    var gymName = $("#searchGymName1").val();
+    var date = $("#searchDate1").val();
     $('#table1').bootstrapTable('destroy');
     $("#table1").bootstrapTable({
         method: "post",
@@ -53,14 +53,14 @@ function searchTable1() {
         },
         onLoadSuccess: function () {  //加载成功时执行
             $('#searchModal1').modal("hide");
-            $('#searchGymName').val('');
-            $('#searchDate').val('');
+            $('#searchGymName1').val('');
+            $('#searchDate1').val('');
             $('#mResult1').addClass('alert-success');
             $('#mResult1').html("Success!");
             setTimeout(function () {
                 $('#mResult1').removeClass('alert-success');
                 $('#mResult1').html('');
-            }, 5000);
+            }, 2000);
         },
         onLoadError: function () {  //加载失败时执行
             $('#searchModal1').modal("hide");
@@ -83,10 +83,12 @@ $('#searchSave1').click(function () {
 
 // 表格2搜索
 function searchTable2() {
+    var gymName = $("#searchGymName2").val();
+    var visitDate = $("#searchVisitDate2").val();
     $('#table2').bootstrapTable('destroy');
     $("#table2").bootstrapTable({
-        method: "get",
-        url: getPath() + "/superAdmin/listAdmin",
+        method: "post",
+        url: getPath() + "/admin/findRecordByNameAndDate",
         cache: false,
         pagination: true, //启动分页
         pageList: "All", //记录数可选列表
@@ -96,6 +98,7 @@ function searchTable2() {
         queryParamsType: "limit",
         clickToSelect: true,
         locale: 'en-US',
+        showRefresh: true,
         //checkboxHeader: false,
         //singleSelect: true,
         queryParams: function queryParams(params) {   //设置查询参数
@@ -105,6 +108,8 @@ function searchTable2() {
                 search: params.search,
                 sort: params.sort,
                 order: params.order,
+                gymName: gymName,
+                visitDate: visitDate
             };
             return param;
         },
@@ -115,7 +120,7 @@ function searchTable2() {
             setTimeout(function () {
                 $('#mResult2').removeClass('alert-success');
                 $('#mResult2').html('');
-            }, 5000);
+            }, 2000);
         },
         onLoadError: function () {  //加载失败时执行
             $('#searchModal2').modal("hide");
@@ -129,8 +134,8 @@ function searchTable2() {
     });
 }
 
-// 刷新Admin表格
-$('#searchBtn2').click(function () {
+// 刷新Record表格
+$('#searchSave2').click(function () {
     searchTable2();
 });
 
@@ -356,7 +361,7 @@ function initTable3() {
             setTimeout(function () {
                 $('#mResult3').removeClass('alert-success');
                 $('#mResult3').html('');
-            }, 5000);
+            }, 2000);
         },
         onLoadError: function () {  //加载失败时执行
             $('#mResult3').addClass('alert-danger');
