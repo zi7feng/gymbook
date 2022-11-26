@@ -7,17 +7,18 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 public class User {
-    private int userId;
-    private String userName;
-    private String userPwd;
-    private int age;
-    private String userPhone;
-    private int gender;
-    private String userEmail;
+    private int userId; //user_id
+    private String userName; //user_name
+    private String userPwd; //user_pwd
+    private int Age; //age
+    private String Gender;//gender
+    private String userPhone;//user_phone
+    private String userEmail;//user_email
 
     @Override
     public String toString() {

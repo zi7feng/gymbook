@@ -1,7 +1,7 @@
 spring:
   datasource:
     username: root
-    password: 12345678
+    password: 123456
     url: jdbc:mysql://localhost:3306/gymbook?useUnicode=true&characterEncoding=utf-8&useSSL=false
     driver-class-name: com.mysql.jdbc.Driver
   thymeleaf:
@@ -27,3 +27,11 @@ logging:
 
 server:
   port: 8081
+#  tomcat:
+#    threads:
+#      max: 10
+#      min-spare: 5
+#    accept-count: 200
+#    max-connections: 2000
+
+

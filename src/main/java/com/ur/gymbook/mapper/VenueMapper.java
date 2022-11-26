@@ -19,6 +19,18 @@ public interface VenueMapper {
     @Select("select * from VENUE where Gym_name = #{gymName} and Date = #{date}")
     List<Venue> findScheduleByNameAndDate(@Param("gymName") String gymName, @Param("date") Date date);
 
+    @Select("select * from VENUE where Gym_status = 1")
+    List<Venue> findAllSchedule();
+
+    @Select("select * from venue where gym_name=#{gymName} and Date = #{date}")
+    Venue findByNameAndDate(@Param("gymName") String gymName, @Param("date") Date date);
+
+    @Select("select * from venue v where v.gym_name like concat('%', #{keyWord},'%') " +
+            "or v.unit_price like concat('%', #{keyWord},'%') " +
+            "or v.gym_status like concat('%', #{keyWord},'%') " +
+            "or v.date like concat('%', #{keyWord},'%')")
+    List<Venue> fuzzSearch(@Param("keyWord") String keyWord);
+
     @Insert("insert into VENUE (Gym_name, Unit_price, Gym_status, Date) values (#{gymName}, #{unitPrice}, #{gymStatus}, #{date})")
     int insertSchedule(@Param("gymName") String gymName, @Param("unitPrice") int unitPrice, @Param("gymStatus") int gymStatus, @Param("date") Date date);
 
@@ -28,6 +40,13 @@ public interface VenueMapper {
     /*
      查看当前时间是否可以预约
      */
+
+    @Select("select #{time} from venue where gym_name = #{gymName} and Date = #{date}")
+    int isAvailable(@Param("time") String time, @Param("gymName") String gymName, @Param("date") Date date);
+
+    @Update("update venue set #{time} = 0 where gym_name = #{gymName} and Date = #{date}")
+    void updateTime(@Param("time") String time, @Param("gymName") String gymName, @Param("date") Date date);
+
     @Select("select Fourteen from VENUE where Gym_name = #{gymName} and Date = #{date}")
     int isAvailableFourteen(@Param("gymName") String gymName, @Param("date") Date date);
 
@@ -73,4 +92,6 @@ public interface VenueMapper {
             "Date = #{venue.date} " +
             "where Gym_id = #{venue.gymId}")
     void updateVenue(Venue venue);
+
+
 }

@@ -1,4 +1,5 @@
 package com.ur.gymbook.mapper;
+
 import com.ur.gymbook.model.User;
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
@@ -7,26 +8,32 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface UserMapper {
 
-    /*
-     查看用户名是否已存在
+    /**
+     * user is existed
      */
     @Select("select * from USER u where u.User_name =#{userName}")
-    User findUserByName(String userName);
+    User findUserByName(@Param("userName") String userName);
 
-    /*
-     * 注册
-     */
-    @Insert("insert into USER (User_name, User_pwd, Age, Gender, User_phone, User_email) values " +
-            "(#{user.userName}, #{user.userPwd}, #{user.age}, #{user.gender}, #{user.userPhone}, #{user.userEmail})")
-    @Options(useGeneratedKeys=true, keyProperty="userId", keyColumn="User_id")
-    void userRegister(User user);
+//    @Select("select * from USER where user_id=#{userId}")
+//    User findUserById(@Param("userId") int userId);
 
-    /*
-     * 登录
+    /**
+     * register
+     * @param user
      */
-    @Select("select * from USER u " +
-            "where u.User_name = #{userName} " +
-            "and u.User_pwd = #{userPwd}")
-    User findByNameAndPassword(@Param(value = "userName") String userName, @Param(value = "userPwd") String userPwd);
+    @Insert("insert into USER values(#{userId}, #{userName}, #{userPwd},#{Age}, #{Gender}, #{userPhone}, #{userEmail})")
+//    @Insert("Insert into User values(#{userId}, #{userName}, #{userPwd},#{Gender}, #{userPhone}, #{userEmail})")
+    @Options(useGeneratedKeys = true, keyProperty = "userId", keyColumn = "userId")
+    int insertUser(User user);
+
+    /**
+     * login
+     */
+    @Select("select * from user u where u.user_name=#{userName} and u.user_pwd=#{userPwd}")
+    User findByNameAndPassword(String userName, String userPwd);
+
+    @Update("update user set user_pwd = #{userPwd}, age = #{Age}, user_phone=#{userPhone}, user_email =#{userEmail} " +
+            "where user_id = #{userId}")
+    int updateUserMyself(User user);
 
 }

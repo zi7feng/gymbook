@@ -21,8 +21,12 @@ public interface ReservationRecordMapper {
     /*
     根据userId查询预约记录
      */
-    @Select("select * from RESERVATION_RECORD where User_id = #{userId}")
-    List<ReservationRecord> findRecordByUserName(int userId);
+//    @Select("select * from RESERVATION_RECORD where User_id = #{userId}")
+//    List<ReservationRecord> findRecordByUserId(int userId);
+
+    @Select("select Id, Gym_name, User_name, User_phone, User_email, Visit_Date, Visit_time, Create_time from RESERVATION_RECORD r, USER u where r.user_id=#{userId} and u.user_id=#{userId}")
+    List<ReservationRecord> findRecordByUserId(int userId);
+
 
     /*
     创建预约记录
@@ -30,11 +34,21 @@ public interface ReservationRecordMapper {
     @Insert("insert into RESERVATION_RECORD (Gym_id, User_id, Visit_date, Visit_time, Create_time) " +
             "values (#{record.gymId}, #{record.userId}, #{record.visitDate}, #{record.visitTime}, #{record.createTime})")
     @Options(useGeneratedKeys = true, keyProperty = "id", keyColumn = "Id")
-    void setRecord(ReservationRecord record);
+    int setRecord(ReservationRecord record);
 
     /*
     删除预约记录
      */
     @Delete("delete from RESERVATION_RECORD where Id = #{id}")
     void deleteRecord(int id);
+
+    @Insert("insert into RESERVATION_RECORD (Gym_name, User_id, Visit_date, Visit_time, Create_time) " +
+            "values (#{gymName}, #{userId}, #{visitDate}, #{visitTime}, #{createTime})")
+    @Options(useGeneratedKeys = true, keyProperty = "id", keyColumn = "Id")
+    int insertRecord(ReservationRecord record);
+
+//    @Select("select * from RESERVATION_RECORD where user_name = #{userName}")
+//    List<ReservationRecord> findRecordByUserName(String userName);
 }
+
+
