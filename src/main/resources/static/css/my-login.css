@@ -4,9 +4,7 @@ html, body {
 
 body.my-login-page {
     /*background-color: #94f5e1;      !*#f7f9fb*!*/
-    background-image: url(img/login_back.png);
-    background-size: 100% 100%;
-    background-repeat: no-repeat;
+    background-color: #f7f9fb;
     font-size: 14px;
 }
 
