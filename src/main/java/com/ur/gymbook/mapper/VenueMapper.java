@@ -41,10 +41,10 @@ public interface VenueMapper {
      查看当前时间是否可以预约
      */
 
-    @Select("select #{time} from venue where gym_name = #{gymName} and Date = #{date}")
-    int isAvailable(@Param("time") String time, @Param("gymName") String gymName, @Param("date") Date date);
+    @Select("select ${visitTime} from venue where gym_name = #{gymName} and Date = #{date}")
+    int isAvailable(@Param("visitTime") String time, @Param("gymName") String gymName, @Param("date") Date date);
 
-    @Update("update venue set #{time} = 0 where gym_name = #{gymName} and Date = #{date}")
+    @Update("update venue set ${time} = 0 where gym_name = #{gymName} and Date = #{date}")
     void updateTime(@Param("time") String time, @Param("gymName") String gymName, @Param("date") Date date);
 
     @Select("select Fourteen from VENUE where Gym_name = #{gymName} and Date = #{date}")
@@ -92,6 +92,9 @@ public interface VenueMapper {
             "Date = #{venue.date} " +
             "where Gym_id = #{venue.gymId}")
     void updateVenue(Venue venue);
+
+    @Update("update venue set ${time} = 1 where gym_name = #{gymName} and Date = #{date}")
+    void updateTime1(@Param("time") String time, @Param("gymName") String gymName, @Param("date") Date date);
 
 
 }

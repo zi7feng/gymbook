@@ -177,12 +177,13 @@ function initTable2() {
 
 // 表格2搜索
 function searchTable2() {
-    var gymName = $("#searchGymName2").val();
-    var visitDate = $("#searchVisitDate2").val();
+    var keyWord = $("#fuzzSearch2").val();
+    // var gymName = $("#searchGymName2").val();
+    // var visitDate = $("#searchVisitDate2").val();
     $('#table2').bootstrapTable('destroy');
     $("#table2").bootstrapTable({
         method: "post",
-        url: getPath() + "/admin/findRecordByNameAndDate",
+        url: getPath() + "/user/fuzzSearch2",
         cache: false,
         pagination: true, //启动分页
         pageList: "All", //记录数可选列表
@@ -202,13 +203,13 @@ function searchTable2() {
                 search: params.search,
                 sort: params.sort,
                 order: params.order,
-                gymName: gymName,
-                visitDate: visitDate
+                keyWord: keyWord,
             };
             return param;
         },
         onLoadSuccess: function () {  //加载成功时执行
             $('#searchModal2').modal("hide");
+            $('#fuzzSearch2').val('');
             $('#mResult2').addClass('alert-success');
             $('#mResult2').html("Success!");
             setTimeout(function () {
@@ -227,6 +228,72 @@ function searchTable2() {
         },
     });
 }
+
+//delete
+$('#deleteBtn1').click(function () {
+    var rows = $('#table2').bootstrapTable('getSelections');
+    if (rows.length !== 1) {
+        bootbox.alert({
+            centerVertical: true,
+            title: "Error",
+            message: "Allow selecting only 1 row! ",
+            locale: "en_US"
+        });
+    } else {
+        //$('#updateSuId').val(rows[0]["suId"]);
+        //$('#updateSuUserName').val(rows[0]["suUserName"]);
+        //$('#updateActivatedStatus').val(rows[0]["activatedStatus"]);
+        $('#deleteModal1').modal("toggle");
+    }
+})
+
+$('#deleteSave1').click(function () {
+    var rows = $('#table2').bootstrapTable('getSelections');
+    var deleteId = rows[0]["id"];
+
+    $.ajax({
+        type: "post",
+        url: getPath() + "/user/deleteSchedule",
+        async: false,
+        dataType: 'json',
+        contentType: 'application/json',
+        data: JSON.stringify({
+            "id": deleteId,
+        }),
+        success: function (data) {
+            if (data.flag) {
+                $('#deleteModal1').modal("hide");
+                bootbox.alert({
+                    centerVertical: true,
+                    title: "Success",
+                    message: "Success!",
+                    locale: "en-US"
+                })
+            } else {
+                $('#deleteModal1').modal("hide");
+                bootbox.alert({
+                    centerVertical: true,
+                    title: "Failed",
+                    message: "Failed!",
+                    locale: "en-US"
+                });
+            }
+
+        },
+        error: function () {
+            $('#deleteModal1').modal("hide");
+            $('#mResult2').addClass('alert-danger');
+            $('#mResult2').html("Server Failed!");
+            setTimeout(function () {
+                $('#mResult2').removeClass('alert-danger');
+                $('#mResult2').html('');
+            }, 200);
+        }
+    })
+    initTable2();
+    initTable1();
+});
+
 
 // 刷新Record表格
 $('#searchSave2').click(function () {
@@ -257,6 +324,7 @@ $('#insertSave1').click(function () {
                 $('#insertGymName').val('');
                 $('#insertDate').val('');
                 $('#visitTime').val('');
+                initTable2();
                 bootbox.alert({
                     centerVertical: true,
                     title: "Success",

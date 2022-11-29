@@ -70,7 +70,7 @@ public class SuperAdminController {
             log.error(e.toString());
             result.put("flag", false);
         }
-        writeJSON2Response(result, response);
+        writeJSON2Response(request, response);
     }
 
     @PostMapping(value = "/updatePassword")
