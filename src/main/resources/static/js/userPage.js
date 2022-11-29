@@ -292,6 +292,7 @@ $('#deleteSave1').click(function () {
     })
     initTable2();
     initTable1();
+
 });
 
 

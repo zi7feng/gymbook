@@ -79,6 +79,7 @@ public interface VenueMapper {
     /*
     更新场馆信息
      */
+
     @Update("Update VENUE set (Gym_name = #{venue.gymName}, " +
             "Unit_price = #{venue.unitPrice}, " +
             "Gym_status = #{venue.gymStatus}, " +

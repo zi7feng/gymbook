@@ -205,6 +205,7 @@ public class UserController {
                 break;
             default:
                 vTime = "";
+
         }
         Date date = r.getVisitDate();
         String name = r.getGymName();

@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>User | Sign up </title>
+  <link rel="stylesheet" href="../static/css/bootstrap.css" th:href="@{/css/bootstrap.css}">
+  <link rel="stylesheet" href="../static/css/my-login.css" th:href="@{/css/my-login.css}">
+</head>
+<body class="my-login-page">
+<section class="h-100">
+  <div class="container h-100">
+    <div class="row justify-content-md-center h-100">
+      <div class="card-wrapper">
+        <!--                <div class="brand">-->
+        <!--                    <img width="100" height="100" src="vendor/img/lab_logo.svg" alt="logo">-->
+        <!--                </div>-->
+        <div class="card fat">
+          <div class="card-body">
+            <h4 class="card-title">User Register</h4>
+            <form method="POST" class="my-login-validation" onsubmit="return false;" novalidate=""
+                  id="registerForm">
+              <div class="form-group">
+                <label for="username">UserName</label>
+                <input id="username" type="text" class="form-control" name="userName" required
+                       autofocus>
+                <div class="invalid-feedback" id="un-feedback">
+                  UserName can't be empty!
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="userPwd">Password</label>
+                <input id="userPwd" type="password" class="form-control" name="userPwd" required
+                       data-eye>
+                <div class="invalid-feedback">
+                  Password can't be empty!
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="Age">Age</label>
+                <input id="Age" type="number" class="form-control" name="Age">
+<!--                <div class="invalid-feedback">-->
+<!--                  -->
+<!--                </div>-->
+              </div>
+
+
+<!--              <div class="form-group">-->
+<!--                <label for="Gender">Gender</label>-->
+<!--                <input type="text" class="form-control" id="Gender" placeholder="" list="data-list1">-->
+<!--                <datalist id = "data-list1">-->
+<!--                  <option>Male</option>-->
+<!--                  <option>Female</option>-->
+<!--                  <option>Secret</option>-->
+<!--                </datalist>-->
+<!--              </div>-->
+
+              <div class="form-group">
+                <label for="Gender">Gender</label>
+                <input id="Gender" type="text" class="form-control" name="Gender">
+              </div>
+
+
+
+              <div class="form-group">
+                <label for="userPhone">Phone number</label>
+                <input id="userPhone" type="tel" class="form-control" name="userPhone">
+                <div class="invalid-feedback">
+                  Invalid phone number!
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="userEmail">Email</label>
+                <input id="userEmail" type="email" class="form-control" name="userEmail">
+                <div class="invalid-feedback">
+                  Invalid Email address!
+                </div>
+              </div>
+
+
+
+              <div class="form-group">
+                <div class="custom-checkbox custom-control">
+                  <input type="checkbox" id="agree" class="custom-control-input"
+                         required="">
+                  <label for="agree" class="custom-control-label">I have read and agree <a
+                          href="#">Terms of Service</a></label>
+                  <div class="invalid-feedback">
+                    You must agree to our terms of service
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group m-0">
+                <button type="submit" class="btn btn-primary btn-block" id="registerBtn">
+                  Sign Up
+                </button>
+              </div>
+              <div class="mt-4 text-center">
+                Have an account? <a href="user.html">Sign In</a>
+              </div>
+              <div class="alert" role="alert" id="registerResult" style="margin: 5px 20% 5px 20%">
+              </div>
+            </form>
+          </div>
+        </div>
+        <div class="footer">
+          Copyright &copy; 2022 &mdash; University of Rochester, CSC461, Team7
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script src="../static/js/jquery-3.4.0.min.js" th:src="@{/js/jquery-3.4.0.min.js}"></script>
+<script src="../static/js/bootstrap.bundle.js" th:src="@{/js/bootstrap.bundle.js}"></script>
+<script src="../static/js/jquery.cookie.js" th:src="@{/js/jquery.cookie.js}"></script>
+<script>
+  $(function () {
+    function getPath() {
+      var curPath = window.document.location.href;
+      var pathName = window.document.location.pathname;
+      var pos = curPath.indexOf(pathName);
+      var localhostPath = curPath.substring(0, pos);
+      var projectName = pathName.substring(0, pathName.substr(1).indexOf('/') + 1);
+      return localhostPath + projectName;
+    };
+
+    $('#username').focus(function () {
+      $('#username').removeClass('is-invalid');
+      $('#registerBtn').removeClass('disabled');
+    });
+
+    $('#username').blur(function () {
+      var username = $('#username').val();
+      if (username != '') {
+        $.ajax({
+          type: "post",
+          url: getPath() + "/user/isRegistered",
+          async: false,
+          dataType: 'json',
+          data: {"username": username},
+          success: function (data) {
+            if (data.result) {
+              $('#username').addClass('is-valid');
+            } else {
+              $('#username').addClass('is-invalid');
+              $('#un-feedback').html('This username has been used!');
+            }
+          },
+          error: function () {
+            $('#registerBtn').addClass('disabled');
+            $('#registerResult').addClass('alert-danger');
+            $('#registerResult').html('Connect error!');
+          }
+
+
+        })
+      }
+    });
+
+    $(".my-login-validation").submit(function () {
+      var form = $(this);
+      console.log(form);
+      if (form[0].checkValidity() === false) {
+        event.preventDefault();
+        event.stopPropagation();
+        $('#registerBtn').addClass('disabled');
+        form.addClass('was-validated');
+      } else {
+        $.ajax({
+          type: "post",
+          url: getPath() + "/user/register",
+          async: false,
+          dataType: 'json',
+          data: $('form').serialize(),
+          success: function (data) {
+            if (data.result) {
+              $('#registerResult').addClass('alert-success');
+              $('#registerResult').html('Registered Successfully!');
+              setTimeout(window.location.href = 'user.html', 5000);
+
+            } else {
+              $('#registerResult').addClass('alert-danger');
+              $('#registerResult').html('Fail');
+            }
+          },
+          error: function () {
+            $('#registerResult').addClass('alert-danger');
+            $('#registerResult').html('Connect error!')
+          }
+        })
+      }
+
+
+    });
+    // $("#registerBtn").click(function () {
+    //     var form = $('#registerForm');
+    //     console.log(form);
+    //     if (form[0].checkValidity() === false) {
+    //         console.log('aaaaaaa');
+    //         event.preventDefault();
+    //         event.stopPropagation();
+    //         console.log('bbbbbb');
+    //     }else{
+    //         // $("#registerForm").attr("action", getPath()+"/user/register");
+    //         form.addClass('was-validated');
+    //         $.ajax({
+    //             type: "post",
+    //             url: getPath() + "/user/register",
+    //             async: false,
+    //             dataType:'json',
+    //             data:$('form').serialize(),
+    //             success: function (data) {
+    //                 if (data.result) {
+    //                     $('#registerResult').addClass('alert-success');
+    //                     $('#registerResult').html('注册成功!跳转至<a href="../index.html">登录</a>界面');
+    //                     setTimeout(window.location.href = '../index.html', 5000);
+    //
+    //                 } else {
+    //                     $('#registerResult').addClass('alert-danger');
+    //                     $('#registerResult').html('注册失败!');
+    //                 }
+    //             },
+    //             error: function () {
+    //                 $('#registerResult').addClass('alert-danger');
+    //                 $('#registerResult').html('网络错误!')
+    //             }
+    //         })
+    //     }
+    //
+    //
+    //
+    // });
+  });
+
+
+</script>
+</body>
+</html>

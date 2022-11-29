@@ -42,6 +42,7 @@ public interface ReservationRecordMapper {
     /*
     删除预约记录
      */
+
     @Delete("delete from RESERVATION_RECORD where Id = #{id}")
     int deleteSchedule(ReservationRecord reservationRecord);
 

@@ -88,6 +88,7 @@ public class SecurityController {
         List<User> list = new ArrayList<>();
         list.add(userData);
         return list;
+
     }
 
     @RequestMapping(value = "/currentUserRecord", method = RequestMethod.GET)
