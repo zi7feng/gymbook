@@ -28,6 +28,7 @@ public class mvc_config implements WebMvcConfigurer {
 
 
 
+
     }
 
     // WebMvcConfigurerAdapter 这个类在SpringBoot2.0已过时，官方推荐直接实现WebMvcConfigurer 这个接口
