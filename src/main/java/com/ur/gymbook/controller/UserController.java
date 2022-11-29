@@ -107,7 +107,7 @@ public class UserController {
             log.error(e.toString());
             result.put("flag", false);
         }
-        writeJSON2Response(request, response);
+        writeJSON2Response(result, response);
     }
 
     @PostMapping(value="/findAllSchedule")
@@ -115,6 +115,7 @@ public class UserController {
         List<Venue> venues = userService.findAllSchedule();
         log.debug("SERVER Get Venue List");
         return venues;
+
     }
 
 //    @PostMapping(value="/findAllRecordById")
