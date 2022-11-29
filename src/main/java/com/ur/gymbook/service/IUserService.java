@@ -21,7 +21,7 @@ public interface IUserService {
     int updateUserMyself(int userId, String userPwd, int Age, String userPhone, String userEmail);
 
 
-    List<ReservationRecord> fuzzSearch2(String keyWord, String userName);
+    List<ReservationRecord> fuzzSearch2(String keyWord, String userName, int id);
 //    ReservationRecord findAllRecordById(int userId);
 //    int insertRecord(int gymId, int userId, Date visitDate, String visitTime, java.util.Date createTime);
 

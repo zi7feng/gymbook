@@ -148,10 +148,11 @@ public class UserController {
         HttpSession session = request.getSession();
         User currentUser = (User)session.getAttribute("userObj");
         String userName = currentUser.getUserName();
+        int id = currentUser.getUserId();
         JSONObject paraJson = JSONObject.parseObject(parameters);
         String keyWord = paraJson.getString("keyWord");
         log.debug("FRONT END TO SERVER: " + "fuzzSearch2" + keyWord);
-        List<ReservationRecord> rr = userService.fuzzSearch2(keyWord,userName);
+        List<ReservationRecord> rr = userService.fuzzSearch2(keyWord,userName,id);
         return rr;
     }
 

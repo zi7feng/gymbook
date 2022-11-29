@@ -57,8 +57,8 @@ public interface ReservationRecordMapper {
     @Select("select Id, Gym_name, User_name, User_phone, User_email, Visit_Date, Visit_time, Create_time from RESERVATION_RECORD r, USER u " +
             "where (r.gym_name like concat('%', #{keyWord},'%') " +
             "or r.visit_date like concat('%', #{keyWord},'%')) " +
-            "and u.user_name = #{userName}")
-    List<ReservationRecord> fuzzSearch(@Param("keyWord") String keyWord, @Param("userName") String userName);
+            "and u.user_name = #{userName} and r.user_id = #{userId}")
+    List<ReservationRecord> fuzzSearch(@Param("keyWord") String keyWord, @Param("userName") String userName, @Param("userId") int userId);
 }
 
 

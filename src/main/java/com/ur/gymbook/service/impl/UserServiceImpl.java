@@ -60,8 +60,8 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    public List<ReservationRecord> fuzzSearch2(String keyWord, String userName) {
-        return reservationRecordMapper.fuzzSearch(keyWord, userName);
+    public List<ReservationRecord> fuzzSearch2(String keyWord, String userName, int id) {
+        return reservationRecordMapper.fuzzSearch(keyWord, userName, id);
     }
 
     @Override
