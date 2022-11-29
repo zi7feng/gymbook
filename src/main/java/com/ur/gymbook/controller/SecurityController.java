@@ -116,20 +116,46 @@ public class SecurityController {
         String gymName = paraJson.getString("gymName");
         Date visitDate = paraJson.getSqlDate("date");
         log.debug("FRONT END TO SERVER: " + visitDate);
-        String visitTime = paraJson.getString("visitTime");
+        String visitTimeStr = paraJson.getString("visitTime");
+        String visitTime;
+        switch (visitTimeStr) {
+            case "fourteen" :
+                visitTime = "14:00-15:00";
+                break;
+            case "fifteen" :
+                visitTime = "15:00-16:00";
+                break;
+            case "sixteen" :
+                visitTime = "16:00-17:00";
+                break;
+            case "seventeen" :
+                visitTime = "17:00-18:00";
+                break;
+            case "eighteen" :
+                visitTime = "18:00-19:00";
+                break;
+            case "nineteen" :
+                visitTime = "19:00-20:00";
+                break;
+            case "twenty" :
+                visitTime = "20:00-21:00";
+                break;
+            default:
+                visitTime = "";
+        }
 //        java.util.Date createTime = paraJson.getSqlDate("createTime");
         java.util.Date createTime = new java.util.Date();
 
         Venue v = venueMapper.findByNameAndDate(gymName, visitDate);
         ReservationRecord rr = new ReservationRecord(0, gymName, userId, userName,
                 userPhone, userEmail, visitDate, visitTime, createTime);
-        int f = venueMapper.isAvailable(visitTime, gymName, visitDate);
+        int f = venueMapper.isAvailable(visitTimeStr, gymName, visitDate);
 //        int f = venueMapper.isAvailableSixteen(gymName, visitDate);
         JSONObject resultJson = new JSONObject();
         int s = venueMapper.isGymAvailable(gymName, visitDate);
         if(f == 1 && s == 1) {
             int ret = reservationRecordMapper.insertRecord(rr);
-            venueMapper.updateTime(visitTime, gymName, visitDate);
+            venueMapper.updateTime(visitTimeStr, gymName, visitDate);
             if (ret > 0) {
                 resultJson.put("flag", true);
             }

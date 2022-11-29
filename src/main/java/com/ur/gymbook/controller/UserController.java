@@ -1,6 +1,8 @@
 package com.ur.gymbook.controller;
 
 import com.alibaba.fastjson.JSONObject;
+import com.ur.gymbook.mapper.ReservationRecordMapper;
+import com.ur.gymbook.mapper.VenueMapper;
 import com.ur.gymbook.model.ReservationRecord;
 import com.ur.gymbook.model.User;
 import com.ur.gymbook.model.Venue;
@@ -14,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.sql.Date;
 import java.util.List;
 
 @RestController
@@ -21,6 +24,12 @@ import java.util.List;
 public class UserController {
     @Resource(name = "userService")
     IUserService userService;
+
+    @Resource
+    private ReservationRecordMapper reservationRecordMapper;
+
+    @Resource
+    private VenueMapper venueMapper;
 
     private Logger log = LoggerFactory.getLogger(this.getClass());
 
@@ -88,7 +97,7 @@ public class UserController {
     }
 
     @PostMapping(value = "/logout")
-    public void logout(HttpServletRequest request, HttpServletResponse response) {
+    public void logout(HttpServletRequest request,HttpServletResponse response) {
         JSONObject result = new JSONObject();
         try {
             request.getSession().invalidate();
@@ -98,7 +107,7 @@ public class UserController {
             log.error(e.toString());
             result.put("flag", false);
         }
-        writeJSON2Response(request, response);
+        writeJSON2Response(result, response);
     }
 
     @PostMapping(value="/findAllSchedule")
@@ -106,6 +115,7 @@ public class UserController {
         List<Venue> venues = userService.findAllSchedule();
         log.debug("SERVER Get Venue List");
         return venues;
+
     }
 
 //    @PostMapping(value="/findAllRecordById")
@@ -133,6 +143,19 @@ public class UserController {
         return venues;
     }
 
+    @PostMapping(value = "/fuzzSearch2")
+    public List<ReservationRecord> fuzzSearch2(@RequestBody String parameters, HttpServletRequest request, HttpServletResponse response) {
+        HttpSession session = request.getSession();
+        User currentUser = (User)session.getAttribute("userObj");
+        String userName = currentUser.getUserName();
+        int id = currentUser.getUserId();
+        JSONObject paraJson = JSONObject.parseObject(parameters);
+        String keyWord = paraJson.getString("keyWord");
+        log.debug("FRONT END TO SERVER: " + "fuzzSearch2" + keyWord);
+        List<ReservationRecord> rr = userService.fuzzSearch2(keyWord,userName,id);
+        return rr;
+    }
+
     @PostMapping(value="/updateUserMyself")
     public void updateUserMyself(@RequestBody String parameters,
                                  HttpServletRequest request,HttpServletResponse response) {
@@ -153,6 +176,50 @@ public class UserController {
         writeJSON2Response(resultJson, response);
     }
 
+
+    @PostMapping(value = "/deleteSchedule")
+    public void deleteSchedule(@RequestBody ReservationRecord reservationRecord, HttpServletRequest request, HttpServletResponse response) {
+        log.debug("FRONT END TO SERVER: " + "DELETE SCHEDULE");
+        JSONObject resultJson = new JSONObject();
+        ReservationRecord r = reservationRecordMapper.findRecordById(reservationRecord.getId());
+        String vTime;
+        switch (r.getVisitTime()) {
+            case "14:00-15:00" :
+                vTime = "fourteen";
+                break;
+            case "15:00-16:00" :
+                vTime = "fifteen";
+                break;
+            case "16:00-17:00" :
+                vTime = "sixteen";
+                break;
+            case "17:00-18:00" :
+                vTime = "seventeen";
+                break;
+            case "18:00-19:00" :
+                vTime = "eighteen";
+                break;
+            case "19:00-20:00" :
+                vTime = "nineteen";
+                break;
+            case "20:00-21:00" :
+                vTime = "twenty";
+                break;
+            default:
+                vTime = "";
+
+        }
+        Date date = r.getVisitDate();
+        String name = r.getGymName();
+        int ret = userService.deleteSchedule(reservationRecord);
+        if(ret > 0) {
+            resultJson.put("flag", true);
+            venueMapper.updateTime1(vTime, name, date);
+        } else {
+            resultJson.put("flag",false);
+        }
+        writeJSON2Response(resultJson, response);
+    }
 //    @PostMapping(value = "/getAllInfo")
 //    public void getAllInfo(@RequestParam(value = "limit", defaultValue = "10") Integer limit,
 //                           @RequestParam(value = "offset", defaultValue = "1") Integer offset,

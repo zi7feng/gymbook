@@ -21,6 +21,7 @@ public interface UserMapper {
      * register
      * @param user
      */
+
     @Insert("insert into USER values(#{userId}, #{userName}, #{userPwd},#{Age}, #{Gender}, #{userPhone}, #{userEmail})")
 //    @Insert("Insert into User values(#{userId}, #{userName}, #{userPwd},#{Gender}, #{userPhone}, #{userEmail})")
     @Options(useGeneratedKeys = true, keyProperty = "userId", keyColumn = "userId")

@@ -71,6 +71,7 @@ public class SuperAdminController {
             result.put("flag", false);
         }
         writeJSON2Response(result, response);
+
     }
 
     @PostMapping(value = "/updatePassword")

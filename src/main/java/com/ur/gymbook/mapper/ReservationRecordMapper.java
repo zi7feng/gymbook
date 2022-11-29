@@ -27,6 +27,9 @@ public interface ReservationRecordMapper {
     @Select("select Id, Gym_name, User_name, User_phone, User_email, Visit_Date, Visit_time, Create_time from RESERVATION_RECORD r, USER u where r.user_id=#{userId} and u.user_id=#{userId}")
     List<ReservationRecord> findRecordByUserId(int userId);
 
+    @Select("select * from reservation_record where id = #{id}")
+    ReservationRecord findRecordById(int id);
+
 
     /*
     创建预约记录
@@ -39,8 +42,9 @@ public interface ReservationRecordMapper {
     /*
     删除预约记录
      */
+
     @Delete("delete from RESERVATION_RECORD where Id = #{id}")
-    void deleteRecord(int id);
+    int deleteSchedule(ReservationRecord reservationRecord);
 
     @Insert("insert into RESERVATION_RECORD (Gym_name, User_id, Visit_date, Visit_time, Create_time) " +
             "values (#{gymName}, #{userId}, #{visitDate}, #{visitTime}, #{createTime})")
@@ -49,6 +53,12 @@ public interface ReservationRecordMapper {
 
 //    @Select("select * from RESERVATION_RECORD where user_name = #{userName}")
 //    List<ReservationRecord> findRecordByUserName(String userName);
+
+    @Select("select Id, Gym_name, User_name, User_phone, User_email, Visit_Date, Visit_time, Create_time from RESERVATION_RECORD r, USER u " +
+            "where (r.gym_name like concat('%', #{keyWord},'%') " +
+            "or r.visit_date like concat('%', #{keyWord},'%')) " +
+            "and u.user_name = #{userName} and r.user_id = #{userId}")
+    List<ReservationRecord> fuzzSearch(@Param("keyWord") String keyWord, @Param("userName") String userName, @Param("userId") int userId);
 }
 
 

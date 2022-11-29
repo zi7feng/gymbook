@@ -65,6 +65,7 @@ public class AdminController {
             result.put("flag", false);
         }
         writeJSON2Response(result, response);
+
     }
 
     @PostMapping(value = "/findScheduleByNameAndDate")
