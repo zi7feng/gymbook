@@ -19,16 +19,16 @@ public interface VenueMapper {
     @Select("select * from VENUE where Gym_name = #{gymName} and Date = #{date}")
     List<Venue> findScheduleByNameAndDate(@Param("gymName") String gymName, @Param("date") Date date);
 
-    @Select("select * from VENUE where Gym_status = 1")
+    @Select("select * from VENUE where Gym_status = 1 and date>=curdate()")
     List<Venue> findAllSchedule();
 
     @Select("select * from venue where gym_name=#{gymName} and Date = #{date}")
     Venue findByNameAndDate(@Param("gymName") String gymName, @Param("date") Date date);
 
-    @Select("select * from venue v where v.gym_name like concat('%', #{keyWord},'%') " +
+    @Select("select * from venue v where  v.gym_name like concat('%', #{keyWord},'%') " +
             "or v.unit_price like concat('%', #{keyWord},'%') " +
             "or v.gym_status like concat('%', #{keyWord},'%') " +
-            "or v.date like concat('%', #{keyWord},'%')")
+            "or (v.date>=curdate() and v.date like concat('%', #{keyWord},'%'))")
     List<Venue> fuzzSearch(@Param("keyWord") String keyWord);
 
     @Insert("insert into VENUE (Gym_name, Unit_price, Gym_status, Date) values (#{gymName}, #{unitPrice}, #{gymStatus}, #{date})")
@@ -43,6 +43,9 @@ public interface VenueMapper {
 
     @Select("select ${visitTime} from venue where gym_name = #{gymName} and Date = #{date}")
     int isAvailable(@Param("visitTime") String time, @Param("gymName") String gymName, @Param("date") Date date);
+
+    @Select("select count(*) from venue where gym_name = #{gymName} and Date = #{date} and date>=curdate()")
+    int isExist(@Param("gymName") String gymName, @Param("date") Date date);
 
     @Update("update venue set ${time} = 0 where gym_name = #{gymName} and Date = #{date}")
     void updateTime(@Param("time") String time, @Param("gymName") String gymName, @Param("date") Date date);

@@ -15,7 +15,7 @@ public interface ReservationRecordMapper {
     @Select("select * from RESERVATION_RECORD")
     List<ReservationRecord> listReservationRecord();
 
-    @Select("select Id, Gym_name, User_name, User_phone, User_email, Visit_Date, Visit_time, Create_time from RESERVATION_RECORD join USER where Gym_name = #{gymName} and Visit_date = #{visitDate}")
+    @Select("select Id, Gym_name, User_name, User_phone, User_email, Visit_Date, Visit_time, Create_time from RESERVATION_RECORD join USER on RESERVATION_RECORD.User_id = USER.User_id where Gym_name = #{gymName} and Visit_date = #{visitDate}")
     List<ReservationRecord> findRecordByNameAndDate(ReservationRecord reservationRecord);
 
     /*
@@ -59,6 +59,12 @@ public interface ReservationRecordMapper {
             "or r.visit_date like concat('%', #{keyWord},'%')) " +
             "and u.user_name = #{userName} and r.user_id = #{userId}")
     List<ReservationRecord> fuzzSearch(@Param("keyWord") String keyWord, @Param("userName") String userName, @Param("userId") int userId);
+
+    /**
+     * cancel 判断是否是之前日期
+     */
+    @Select("select count(*) from reservation_record where id= #{id} and visit_date > curdate()")
+    int canDelete(ReservationRecord reservationRecord);
 }
 
 

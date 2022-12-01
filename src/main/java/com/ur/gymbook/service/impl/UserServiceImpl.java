@@ -69,6 +69,10 @@ public class UserServiceImpl implements IUserService {
         return reservationRecordMapper.deleteSchedule(reservationRecord);
     }
 
+    @Override
+    public int canDelete(ReservationRecord reservationRecord) {
+        return reservationRecordMapper.canDelete(reservationRecord);
+    }
 
 
 //    @Override

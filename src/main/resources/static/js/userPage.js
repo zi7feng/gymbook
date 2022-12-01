@@ -143,7 +143,7 @@ function initTable2() {
         sidePagination: "client", //表示服务端请求
         queryParamsType: "limit",
         clickToSelect: true,
-        locale: 'zh-CN',
+        locale: 'en-US',
         //checkboxHeader: false,
         //singleSelect: true,
         queryParams: function queryParams(params) {   //设置查询参数
@@ -352,6 +352,7 @@ $('#insertSave1').click(function () {
             }, 2000);
         }
     })
+    initTable1();
 });
 
 
