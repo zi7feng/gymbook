@@ -149,17 +149,24 @@ public class SecurityController {
         Venue v = venueMapper.findByNameAndDate(gymName, visitDate);
         ReservationRecord rr = new ReservationRecord(0, gymName, userId, userName,
                 userPhone, userEmail, visitDate, visitTime, createTime);
-        int f = venueMapper.isAvailable(visitTimeStr, gymName, visitDate);
+
+        int vt = venueMapper.isExist(gymName, visitDate);
 //        int f = venueMapper.isAvailableSixteen(gymName, visitDate);
         JSONObject resultJson = new JSONObject();
-        int s = venueMapper.isGymAvailable(gymName, visitDate);
-        if(f == 1 && s == 1) {
-            int ret = reservationRecordMapper.insertRecord(rr);
-            venueMapper.updateTime(visitTimeStr, gymName, visitDate);
-            if (ret > 0) {
-                resultJson.put("flag", true);
-            }
 
+        if(vt!=0) {
+            int f = venueMapper.isAvailable(visitTimeStr, gymName, visitDate);
+            int s = venueMapper.isGymAvailable(gymName, visitDate);
+            if(f == 1 && s == 1) {
+                int ret = reservationRecordMapper.insertRecord(rr);
+                venueMapper.updateTime(visitTimeStr, gymName, visitDate);
+                if (ret > 0) {
+                    resultJson.put("flag", true);
+                }
+
+            } else {
+                resultJson.put("flag", false);
+            }
         } else {
             resultJson.put("flag", false);
         }

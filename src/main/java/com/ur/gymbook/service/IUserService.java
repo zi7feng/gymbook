@@ -26,4 +26,6 @@ public interface IUserService {
 //    int insertRecord(int gymId, int userId, Date visitDate, String visitTime, java.util.Date createTime);
 
     int deleteSchedule(ReservationRecord reservationRecord);
+
+    int canDelete(ReservationRecord reservationRecord);
 }

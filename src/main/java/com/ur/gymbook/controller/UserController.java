@@ -211,10 +211,15 @@ public class UserController {
         }
         Date date = r.getVisitDate();
         String name = r.getGymName();
-        int ret = userService.deleteSchedule(reservationRecord);
-        if(ret > 0) {
-            resultJson.put("flag", true);
-            venueMapper.updateTime1(vTime, name, date);
+        int c = userService.canDelete(reservationRecord);
+        if (c==1) {
+            int ret = userService.deleteSchedule(reservationRecord);
+            if(ret > 0) {
+                resultJson.put("flag", true);
+                venueMapper.updateTime1(vTime, name, date);
+            } else {
+                resultJson.put("flag",false);
+            }
         } else {
             resultJson.put("flag",false);
         }

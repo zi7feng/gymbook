@@ -66,7 +66,7 @@ CREATE TABLE `RESERVATION_RECORD` (
 -- ----------------------------
 BEGIN;
 INSERT INTO `RESERVATION_RECORD` VALUES (1, 'venue 1', 1, '2022-11-21', '14:00-15:00', '2022-11-19 14:16:35');
-INSERT INTO `RESERVATION_RECORD` VALUES (2, 'venue 1', 1, '2022-11-21', '15:00-16:00', '2022-11-22 20:04:46');
+INSERT INTO `RESERVATION_RECORD` VALUES (2, 'venue 1', 3, '2022-11-21', '15:00-16:00', '2022-11-22 20:04:46');
 COMMIT;
 
 -- ----------------------------
@@ -140,10 +140,10 @@ CREATE TABLE `VENUE` (
 -- ----------------------------
 BEGIN;
 INSERT INTO `VENUE` VALUES ('venue 1', 7, 1, 1, 1, 1, 1, 1, 1, 1, '2022-11-20');
-INSERT INTO `VENUE` VALUES ('venue 1', 21, 1, 0, 0, 1, 1, 1, 1, 1, '2022-11-21');
-INSERT INTO `VENUE` VALUES ('venue 2', 67, 1, 1, 1, 1, 1, 1, 1, 1, '2022-11-20');
-INSERT INTO `VENUE` VALUES ('venue 2', 87, 1, 1, 1, 1, 1, 1, 1, 1, '2022-11-21');
-INSERT INTO `VENUE` VALUES ('venue 2', 21, 1, 1, 1, 1, 1, 1, 1, 1, '2022-11-22');
+INSERT INTO `VENUE` VALUES ('venue 1', 21, 1, 0, 0, 1, 1, 1, 1, 1, '2022-12-06');
+INSERT INTO `VENUE` VALUES ('venue 2', 67, 1, 1, 1, 1, 1, 1, 1, 1, '2022-11-30');
+INSERT INTO `VENUE` VALUES ('venue 2', 87, 1, 1, 1, 1, 1, 1, 1, 1, '2022-12-01');
+INSERT INTO `VENUE` VALUES ('venue 2', 21, 1, 1, 1, 1, 1, 1, 1, 1, '2022-12-02');
 COMMIT;
 
 SET FOREIGN_KEY_CHECKS = 1;

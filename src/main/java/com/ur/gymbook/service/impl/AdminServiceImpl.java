@@ -13,6 +13,7 @@ import javax.annotation.Resource;
 import java.sql.Date;
 import java.util.List;
 
+
 @Service
 public class AdminServiceImpl implements IAdminService {
     @Resource
@@ -23,26 +24,60 @@ public class AdminServiceImpl implements IAdminService {
     @Resource
     private ReservationRecordMapper reservationRecordMapper;
 
+    /**
+     * findByNameAndPassword
+     * @param adminName
+     * @param adminPwd
+     * @return Admin
+     */
     @Override
     public Admin findByNameAndPassword(String adminName, String adminPwd) {
         return adminMapper.findByNameAndPassword(adminName,adminPwd);
     }
 
+    /**
+     * findScheduleByNameAndDate
+     * @param gymName
+     * @param date
+     * @return List<Venue>
+     */
     @Override
     public List<Venue> findScheduleByNameAndDate(String gymName, Date date) {
         return venueMapper.findScheduleByNameAndDate(gymName, date);
     }
 
+    /**
+     * insertSchedule
+     * @param gymName
+     * @param unitPrice
+     * @param gymStatus
+     * @param date
+     * @return int
+     */
     @Override
     public int insertSchedule(String gymName, int unitPrice, int gymStatus, Date date) {
         return venueMapper.insertSchedule(gymName, unitPrice, gymStatus, date);
     }
 
+    /**
+     * updateSchedule
+     * @param gymName
+     * @param unitPrice
+     * @param gymStatus
+     * @param date
+     * @return int
+     */
     @Override
     public int updateSchedule(String gymName, int unitPrice, int gymStatus, Date date) {
         return venueMapper.updateSchedule(gymName, unitPrice, gymStatus, date);
     }
 
+    /**
+     * insertAdmin
+     * @param adminName
+     * @param adminPwd
+     * @return int
+     */
     @Override
     public int insertAdmin(String adminName, String adminPwd) {
         Admin admin = new Admin();
@@ -51,11 +86,24 @@ public class AdminServiceImpl implements IAdminService {
         return adminMapper.insertAdmin(admin);
     }
 
+    /**
+     * findAdminByName
+     * @param adminName
+     * @return Admin
+     */
     @Override
     public Admin findAdminByName(String adminName) {
         return adminMapper.findAdminByName(adminName);
     }
 
+    /**
+     * updateAdminMyself
+     * @param adId
+     * @param adminPwd
+     * @param adminPhone
+     * @param adminEmail
+     * @return int
+     */
     @Override
     public int updateAdminMyself(int adId, String adminPwd, String adminPhone, String adminEmail) {
         Admin admin = new Admin();
@@ -66,6 +114,12 @@ public class AdminServiceImpl implements IAdminService {
         return adminMapper.updateAdminMyself(admin);
     }
 
+    /**
+     * findRecordByNameAndDate
+     * @param gymName
+     * @param visitDate
+     * @return List<ReservationRecord>
+     */
     @Override
     public List<ReservationRecord> findRecordByNameAndDate(String gymName, Date visitDate) {
         ReservationRecord reservationRecord = new ReservationRecord();
