@@ -25,9 +25,9 @@ public interface VenueMapper {
     @Select("select * from venue where gym_name=#{gymName} and Date = #{date}")
     Venue findByNameAndDate(@Param("gymName") String gymName, @Param("date") Date date);
 
-    @Select("select * from venue v where  v.gym_name like concat('%', #{keyWord},'%') " +
-            "or v.unit_price like concat('%', #{keyWord},'%') " +
-            "or v.gym_status like concat('%', #{keyWord},'%') " +
+    @Select("select * from venue v where  (v.date>=curdate() and v.gym_name like concat('%', #{keyWord},'%')) " +
+            "or (v.date>=curdate() andv.unit_price like concat('%', #{keyWord},'%')) " +
+            "or (v.date>=curdate() and v.gym_status like concat('%', #{keyWord},'%')) " +
             "or (v.date>=curdate() and v.date like concat('%', #{keyWord},'%'))")
     List<Venue> fuzzSearch(@Param("keyWord") String keyWord);
 
